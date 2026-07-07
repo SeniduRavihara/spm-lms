@@ -5,8 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { api } from '@/lib/api';
 import { useAuth } from '@/contexts/AuthContext';
 import Link from 'next/link';
-import ProgressBar from '@/components/ProgressBar';
-import ChecklistItem from '@/components/ChecklistItem';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface Lesson {
   id: string;
@@ -27,56 +26,176 @@ export default function StudentCoursePage() {
   const router = useRouter();
   const [course, setCourse] = useState<Course | null>(null);
   const [completed, setCompleted] = useState<Set<string>>(new Set());
+  const [loadingData, setLoadingData] = useState(true);
 
   useEffect(() => {
-    if (!loading && (!user || user.role !== 'student')) router.push('/login');
+    if (!loading && (!user || user.role !== 'student')) {
+      router.push('/login');
+    }
   }, [user, loading, router]);
 
   useEffect(() => {
-    api.courses.get(id as string).then(setCourse);
-    api.progress.get(id as string).then((progress: any[]) => {
-      setCompleted(new Set(progress.filter(p => p.completed).map(p => p.lessonId)));
-    });
-  }, [id]);
+    async function loadCourseDetails() {
+      try {
+        const c = await api.courses.get(id as string);
+        setCourse(c);
+        const progressList = await api.progress.get(id as string);
+        setCompleted(new Set(progressList.filter((p: any) => p.completed).map((p: any) => p.lessonId)));
+      } catch (err) {
+        console.error('Error loading course details:', err);
+      } finally {
+        setLoadingData(false);
+      }
+    }
+    if (id && !loading && user && user.role === 'student') {
+      loadCourseDetails();
+    }
+  }, [id, loading, user]);
 
   async function handleToggle(lessonId: string) {
-    const updated = await api.progress.toggle(lessonId, id as string);
-    setCompleted(prev => {
-      const next = new Set(prev);
-      if (updated.completed) next.add(lessonId);
-      else next.delete(lessonId);
-      return next;
-    });
+    try {
+      const updated = await api.progress.toggle(lessonId, id as string);
+      setCompleted((prev) => {
+        const next = new Set(prev);
+        if (updated.completed) next.add(lessonId);
+        else next.delete(lessonId);
+        return next;
+      });
+    } catch (err) {
+      console.error('Failed to toggle progress:', err);
+    }
   }
 
   if (loading || !user) return null;
-  if (!course) return <p className="text-zinc-400">Loading...</p>;
+
+  if (loadingData) {
+    return (
+      <div className="flex min-h-[50vh] items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block h-12 w-12 animate-spin rounded-full border-4 border-blue-500 border-t-transparent"></div>
+          <p className="mt-4 text-gray-600 font-semibold">Loading course content...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!course) {
+    return (
+      <div className="text-center py-12">
+        <p className="text-red-500 font-semibold mb-4">Course not found.</p>
+        <Link href="/student" className="text-blue-600 hover:underline">
+          &larr; Back to courses
+        </Link>
+      </div>
+    );
+  }
+
+  const totalLessons = course.lessons.length;
+  const completedLessons = completed.size;
+  const progressPct = totalLessons > 0 ? Math.round((completedLessons / totalLessons) * 100) : 0;
 
   return (
-    <div>
-      <Link href="/student" className="text-sm text-blue-600 hover:underline">&larr; Back to courses</Link>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="max-w-4xl mx-auto py-8"
+    >
+      {/* Breadcrumbs */}
+      <Link href="/student" className="inline-flex items-center text-sm font-semibold text-blue-600 hover:text-blue-700 mb-6 group transition">
+        <span className="mr-1 group-hover:-translate-x-1 transition-transform">&larr;</span> Back to courses
+      </Link>
 
-      <h1 className="text-2xl font-bold text-zinc-900 mt-2 mb-1">{course.title}</h1>
-      <p className="text-zinc-500 mb-6">{course.description}</p>
-
-      <div className="mb-6">
-        <ProgressBar completed={completed.size} total={course.lessons.length} />
+      {/* Header Card */}
+      <div className="rounded-2xl border border-blue-100 bg-gradient-to-br from-white to-blue-50/30 p-8 shadow-xl mb-8">
+        <div className="flex items-center gap-2 mb-3">
+          <span className="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-bold">
+            Interactive Learning
+          </span>
+        </div>
+        <h1 className="text-3xl font-extrabold text-gray-900 mb-3">{course.title}</h1>
+        <p className="text-gray-600 text-lg leading-relaxed">{course.description || 'No description provided.'}</p>
       </div>
 
-      <div className="border border-zinc-200 rounded-xl divide-y divide-zinc-100">
-        {course.lessons.map(l => (
-          <ChecklistItem
-            key={l.id}
-            id={l.id}
-            title={l.title}
-            completed={completed.has(l.id)}
-            onToggle={() => handleToggle(l.id)}
+      {/* Progress Header Card */}
+      <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-md mb-8">
+        <div className="flex justify-between items-center mb-3">
+          <span className="text-sm font-bold text-gray-700">Course Syllabus Progress</span>
+          <span className="text-sm font-extrabold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+            {completedLessons}/{totalLessons} Lessons ({progressPct}%)
+          </span>
+        </div>
+        <div className="h-4 bg-gray-100 rounded-full overflow-hidden border border-gray-100">
+          <motion.div
+            className="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-cyan-500 rounded-full"
+            initial={{ width: 0 }}
+            animate={{ width: `${progressPct}%` }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
           />
-        ))}
-        {course.lessons.length === 0 && (
-          <p className="p-4 text-zinc-400 text-sm">No lessons in this course yet.</p>
+        </div>
+      </div>
+
+      {/* Syllabus Lessons Checklist */}
+      <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+        <span className="text-lg">📚</span> Course Lessons
+      </h2>
+
+      <div className="space-y-3">
+        <AnimatePresence initial={false}>
+          {course.lessons.map((lesson, idx) => {
+            const isCompleted = completed.has(lesson.id);
+            return (
+              <motion.div
+                key={lesson.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: idx * 0.05 }}
+                whileHover={{ scale: 1.01, y: -2 }}
+                onClick={() => handleToggle(lesson.id)}
+                className={`flex items-center justify-between p-4 border rounded-xl cursor-pointer select-none transition-all duration-200 ${
+                  isCompleted
+                    ? 'border-green-200 bg-green-50/30 hover:border-green-300'
+                    : 'border-gray-200 bg-white hover:border-blue-300 hover:shadow-md'
+                }`}
+              >
+                <div className="flex items-center gap-4 flex-1">
+                  {/* Custom Checkbox */}
+                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
+                    isCompleted
+                      ? 'border-green-500 bg-green-500 text-white'
+                      : 'border-gray-300 bg-white group-hover:border-blue-500'
+                  }`}>
+                    {isCompleted && (
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    )}
+                  </div>
+                  <span className={`font-semibold text-gray-800 transition ${isCompleted ? 'line-through text-gray-400' : ''}`}>
+                    {lesson.title}
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <span className={`text-xs font-semibold px-2 py-0.5 rounded ${
+                    isCompleted
+                      ? 'bg-green-100 text-green-700'
+                      : 'bg-gray-100 text-gray-500'
+                  }`}>
+                    {isCompleted ? 'Completed' : 'Pending'}
+                  </span>
+                </div>
+              </motion.div>
+            );
+          })}
+        </AnimatePresence>
+
+        {totalLessons === 0 && (
+          <div className="rounded-xl border border-dashed border-gray-300 p-8 text-center text-gray-400 bg-white">
+            There are no lessons uploaded for this course yet.
+          </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
