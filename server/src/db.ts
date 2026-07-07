@@ -61,7 +61,40 @@ async function seed() {
   };
   c2.lessons.forEach(l => l.courseId = c2.id);
 
-  courses.push(c1, c2);
+  const c3: Course = {
+    id: uuid(), title: 'Database Design & SQL', description: 'Master relational databases, entity-relationship modeling, and advanced SQL querying.',
+    teacherId, lessons: [
+      { id: uuid(), title: 'Relational Database Concepts', courseId: '' },
+      { id: uuid(), title: 'Designing Database Schemas', courseId: '' },
+      { id: uuid(), title: 'Writing SQL Queries', courseId: '' },
+      { id: uuid(), title: 'Joins & Aggregations', courseId: '' },
+    ],
+  };
+  c3.lessons.forEach(l => l.courseId = c3.id);
+
+  const c4: Course = {
+    id: uuid(), title: 'Advanced React & State Management', description: 'Deep dive into state management, custom hooks, performance tuning, and React Server Components.',
+    teacherId, lessons: [
+      { id: uuid(), title: 'React Rendering & Reconciliation', courseId: '' },
+      { id: uuid(), title: 'Custom Hooks Patterns', courseId: '' },
+      { id: uuid(), title: 'State Management with Zustand', courseId: '' },
+      { id: uuid(), title: 'React Server Components (RSC)', courseId: '' },
+    ],
+  };
+  c4.lessons.forEach(l => l.courseId = c4.id);
+
+  const c5: Course = {
+    id: uuid(), title: 'Introduction to Cloud Computing', description: 'Learn about virtualization, containerization, serverless architectures, and cloud deployment.',
+    teacherId, lessons: [
+      { id: uuid(), title: 'Cloud Architecture Fundamentals', courseId: '' },
+      { id: uuid(), title: 'Virtual Servers & Containers (Docker)', courseId: '' },
+      { id: uuid(), title: 'Serverless Functions', courseId: '' },
+      { id: uuid(), title: 'Cloud Monitoring & Auto-Scaling', courseId: '' },
+    ],
+  };
+  c5.lessons.forEach(l => l.courseId = c5.id);
+
+  courses.push(c1, c2, c3, c4, c5);
 }
 
 seed();

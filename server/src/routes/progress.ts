@@ -4,6 +4,11 @@ import { authenticate } from '../middleware/auth';
 
 const router = Router();
 
+router.get('/', authenticate, (req: Request, res: Response) => {
+  const userProgress = progress.filter(p => p.userId === req.user!.userId);
+  res.json(userProgress);
+});
+
 router.get('/:courseId', authenticate, (req: Request, res: Response) => {
   const course = courses.find(c => c.id === req.params.courseId);
   if (!course) return res.status(404).json({ error: 'Course not found' });

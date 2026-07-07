@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import { v4 as uuid } from 'uuid';
 import { users } from '../db';
-import { generateToken } from '../middleware/auth';
+import { generateToken, authenticate } from '../middleware/auth';
 
 const router = Router();
 
@@ -41,6 +41,42 @@ router.post('/login', async (req: Request, res: Response) => {
 
   const token = generateToken({ userId: user.id, email: user.email, role: user.role });
   res.json({ token, user: { id: user.id, email: user.email, name: user.name, role: user.role } });
+});
+
+router.put('/profile', authenticate, async (req: Request, res: Response) => {
+  const { name, email, currentPassword, newPassword } = req.body;
+  const user = users.find(u => u.id === req.user!.userId);
+
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+
+  if (email && email !== user.email) {
+    if (users.find(u => u.email === email)) {
+      return res.status(409).json({ error: 'Email already in use' });
+    }
+    user.email = email;
+  }
+
+  if (name) {
+    user.name = name;
+  }
+
+  if (newPassword) {
+    if (!currentPassword) {
+      return res.status(400).json({ error: 'Current password is required to set a new password' });
+    }
+    if (!(await bcrypt.compare(currentPassword, user.password))) {
+      return res.status(401).json({ error: 'Invalid current password' });
+    }
+    user.password = await bcrypt.hash(newPassword, 10);
+  }
+
+  const token = generateToken({ userId: user.id, email: user.email, role: user.role });
+  res.json({
+    token,
+    user: { id: user.id, email: user.email, name: user.name, role: user.role }
+  });
 });
 
 router.get('/me', (req: Request, res: Response) => {
