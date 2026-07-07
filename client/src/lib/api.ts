@@ -19,6 +19,8 @@ export const api = {
     signup: (email: string, password: string, name: string, role: string) =>
       request('/auth/signup', { method: 'POST', body: JSON.stringify({ email, password, name, role }) }),
     me: () => request('/auth/me'),
+    updateProfile: (data: { name?: string; email?: string; currentPassword?: string; newPassword?: string }) =>
+      request('/auth/profile', { method: 'PUT', body: JSON.stringify(data) }),
   },
   courses: {
     list: () => request('/courses'),
@@ -37,6 +39,7 @@ export const api = {
     delete: (id: string) => request(`/lessons/${id}`, { method: 'DELETE' }),
   },
   progress: {
+    getAll: () => request('/progress'),
     get: (courseId: string) => request(`/progress/${courseId}`),
     toggle: (lessonId: string, courseId: string) =>
       request('/progress/toggle', { method: 'POST', body: JSON.stringify({ lessonId, courseId }) }),

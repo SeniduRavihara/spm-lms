@@ -1,18 +1,22 @@
 import { Router, Request, Response } from 'express';
 import { v4 as uuid } from 'uuid';
-import { courses } from '../db';
+import { courses, users } from '../db';
 import { authenticate, requireRole } from '../middleware/auth';
 
 const router = Router();
 
 router.get('/', authenticate, (_req: Request, res: Response) => {
-  const list = courses.map(c => ({
-    id: c.id,
-    title: c.title,
-    description: c.description,
-    teacherId: c.teacherId,
-    lessonCount: c.lessons.length,
-  }));
+  const list = courses.map(c => {
+    const teacher = users.find(u => u.id === c.teacherId);
+    return {
+      id: c.id,
+      title: c.title,
+      description: c.description,
+      teacherId: c.teacherId,
+      teacherName: teacher ? teacher.name : 'Unknown Instructor',
+      lessonCount: c.lessons.length,
+    };
+  });
   res.json(list);
 });
 
