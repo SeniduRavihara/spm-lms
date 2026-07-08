@@ -88,7 +88,7 @@ export function Features() {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <h3 className="text-2xl font-bold text-foreground mb-6">Why Choose IDEACADE?</h3>
+          <h3 className="text-2xl font-bold text-foreground mb-6">Why Choose SPM LMS?</h3>
           <div className="grid gap-4 md:grid-cols-2">
             {[
               'Flexible Learning Schedule',

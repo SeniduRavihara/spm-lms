@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 const faqs = [
   {
-    question: 'How do I get started with IDEACADE?',
+    question: 'How do I get started with SPM LMS?',
     answer: 'Getting started is easy! Simply create an account, browse our course catalog, and enroll in the courses that interest you. You can start learning immediately with lifetime access to course materials.',
   },
   {
@@ -47,7 +47,7 @@ export function FAQ() {
           <p className="text-sm font-semibold text-primary uppercase tracking-wide mb-3">FAQ</p>
           <h2 className="text-4xl font-bold text-foreground mb-4">Frequently Asked Questions</h2>
           <p className="text-lg text-muted-foreground">
-            Find answers to common questions about IDEACADE and how we can help you succeed.
+            Find answers to common questions about SPM LMS and how we can help you succeed.
           </p>
         </motion.div>
 

@@ -21,7 +21,7 @@ export function Footer() {
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
                 </svg>
               </div>
-              <span className="text-xl font-bold">IDEACADE</span>
+              <span className="text-xl font-bold">SPM LMS</span>
             </Link>
             <p className="mt-4 text-sm text-gray-400">
               Empowering learners worldwide with expert-led courses and professional development.
@@ -102,7 +102,7 @@ export function Footer() {
           viewport={{ once: true }}
         >
           <p className="text-sm text-gray-400">
-            © 2024 IDEACADE. All rights reserved.
+            © 2024 SPM LMS. All rights reserved.
           </p>
           <div className="flex items-center gap-6 mt-4 md:mt-0">
             <a href="#" className="text-gray-400 hover:text-white transition">

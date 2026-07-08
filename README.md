@@ -1,6 +1,6 @@
-# IDEACADE - Learning Management System (LMS)
+# SPM LMS - Learning Management System (LMS)
 
-Welcome to **IDEACADE**, a premium, full-stack Learning Management System (LMS) designed to offer interactive learning platforms for students and courses/lesson administration for teachers.
+Welcome to **SPM LMS**, a premium, full-stack Learning Management System (LMS) designed to offer interactive learning platforms for students and courses/lesson administration for teachers.
 
 ---
 
