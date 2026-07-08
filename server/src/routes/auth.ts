@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
-import { v4 as uuid } from 'uuid';
-import { users } from '../db';
+import jwt from 'jsonwebtoken';
+import { prisma } from '../db';
 import { generateToken, authenticate } from '../middleware/auth';
 
 const router = Router();
@@ -15,16 +15,23 @@ router.post('/signup', async (req: Request, res: Response) => {
   if (role !== 'student' && role !== 'teacher') {
     return res.status(400).json({ error: 'Role must be student or teacher' });
   }
-  if (users.find(u => u.email === email)) {
-    return res.status(409).json({ error: 'Email already in use' });
+
+  try {
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    if (existingUser) {
+      return res.status(409).json({ error: 'Email already in use' });
+    }
+
+    const hashed = await bcrypt.hash(password, 10);
+    const user = await prisma.user.create({
+      data: { email, password: hashed, name, role }
+    });
+
+    const token = generateToken({ userId: user.id, email: user.email, role: user.role as 'student' | 'teacher' });
+    res.status(201).json({ token, user: { id: user.id, email: user.email, name: user.name, role: user.role } });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message || 'Internal server error during signup' });
   }
-
-  const hashed = await bcrypt.hash(password, 10);
-  const user = { id: uuid(), email, password: hashed, name, role };
-  users.push(user);
-
-  const token = generateToken({ userId: user.id, email: user.email, role: user.role });
-  res.status(201).json({ token, user: { id: user.id, email: user.email, name: user.name, role: user.role } });
 });
 
 router.post('/login', async (req: Request, res: Response) => {
@@ -34,60 +41,77 @@ router.post('/login', async (req: Request, res: Response) => {
     return res.status(400).json({ error: 'Email and password are required' });
   }
 
-  const user = users.find(u => u.email === email);
-  if (!user || !(await bcrypt.compare(password, user.password))) {
-    return res.status(401).json({ error: 'Invalid credentials' });
-  }
+  try {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
 
-  const token = generateToken({ userId: user.id, email: user.email, role: user.role });
-  res.json({ token, user: { id: user.id, email: user.email, name: user.name, role: user.role } });
+    const token = generateToken({ userId: user.id, email: user.email, role: user.role as 'student' | 'teacher' });
+    res.json({ token, user: { id: user.id, email: user.email, name: user.name, role: user.role } });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message || 'Internal server error during login' });
+  }
 });
 
 router.put('/profile', authenticate, async (req: Request, res: Response) => {
   const { name, email, currentPassword, newPassword } = req.body;
-  const user = users.find(u => u.id === req.user!.userId);
+  const userId = req.user!.userId;
 
-  if (!user) {
-    return res.status(404).json({ error: 'User not found' });
-  }
+  try {
+    const user = await prisma.user.findUnique({ where: { id: userId } });
 
-  if (email && email !== user.email) {
-    if (users.find(u => u.email === email)) {
-      return res.status(409).json({ error: 'Email already in use' });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
     }
-    user.email = email;
-  }
 
-  if (name) {
-    user.name = name;
-  }
+    const dataToUpdate: any = {};
 
-  if (newPassword) {
-    if (!currentPassword) {
-      return res.status(400).json({ error: 'Current password is required to set a new password' });
+    if (email && email !== user.email) {
+      const existing = await prisma.user.findUnique({ where: { email } });
+      if (existing) {
+        return res.status(409).json({ error: 'Email already in use' });
+      }
+      dataToUpdate.email = email;
     }
-    if (!(await bcrypt.compare(currentPassword, user.password))) {
-      return res.status(401).json({ error: 'Invalid current password' });
-    }
-    user.password = await bcrypt.hash(newPassword, 10);
-  }
 
-  const token = generateToken({ userId: user.id, email: user.email, role: user.role });
-  res.json({
-    token,
-    user: { id: user.id, email: user.email, name: user.name, role: user.role }
-  });
+    if (name) {
+      dataToUpdate.name = name;
+    }
+
+    if (newPassword) {
+      if (!currentPassword) {
+        return res.status(400).json({ error: 'Current password is required to set a new password' });
+      }
+      if (!(await bcrypt.compare(currentPassword, user.password))) {
+        return res.status(401).json({ error: 'Invalid current password' });
+      }
+      dataToUpdate.password = await bcrypt.hash(newPassword, 10);
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: dataToUpdate
+    });
+
+    const token = generateToken({ userId: updatedUser.id, email: updatedUser.email, role: updatedUser.role as 'student' | 'teacher' });
+    res.json({
+      token,
+      user: { id: updatedUser.id, email: updatedUser.email, name: updatedUser.name, role: updatedUser.role }
+    });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message || 'Internal server error during profile update' });
+  }
 });
 
-router.get('/me', (req: Request, res: Response) => {
+router.get('/me', async (req: Request, res: Response) => {
   const header = req.headers.authorization;
   if (!header?.startsWith('Bearer ')) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
   try {
-    const jwt = require('jsonwebtoken');
-    const payload = jwt.verify(header.slice(7), process.env.JWT_SECRET || 'dev-secret') as any;
-    const user = users.find(u => u.id === payload.userId);
+    const payload = jwt.verify(header.slice(7), process.env.JWT_SECRET || 'dev-secret-key-change-in-production') as any;
+    const user = await prisma.user.findUnique({ where: { id: payload.userId } });
     if (!user) return res.status(404).json({ error: 'User not found' });
     res.json({ id: user.id, email: user.email, name: user.name, role: user.role });
   } catch {

@@ -1,44 +1,79 @@
 import { Router, Request, Response } from 'express';
-import { courses, progress } from '../db';
+import { prisma } from '../db';
 import { authenticate } from '../middleware/auth';
 
 const router = Router();
 
-router.get('/', authenticate, (req: Request, res: Response) => {
-  const userProgress = progress.filter(p => p.userId === req.user!.userId);
-  res.json(userProgress);
+router.get('/', authenticate, async (req: Request, res: Response) => {
+  try {
+    const userProgress = await prisma.progress.findMany({
+      where: { userId: req.user!.userId }
+    });
+    res.json(userProgress);
+  } catch (err: any) {
+    res.status(500).json({ error: err.message || 'Internal server error listing progress' });
+  }
 });
 
-router.get('/:courseId', authenticate, (req: Request, res: Response) => {
-  const course = courses.find(c => c.id === req.params.courseId);
-  if (!course) return res.status(404).json({ error: 'Course not found' });
+router.get('/:courseId', authenticate, async (req: Request, res: Response) => {
+  try {
+    const course = await prisma.course.findUnique({ where: { id: req.params.courseId } });
+    if (!course) return res.status(404).json({ error: 'Course not found' });
 
-  const userProgress = progress.filter(
-    p => p.userId === req.user!.userId && p.courseId === req.params.courseId
-  );
-  res.json(userProgress);
+    const userProgress = await prisma.progress.findMany({
+      where: {
+        userId: req.user!.userId,
+        courseId: req.params.courseId
+      }
+    });
+    res.json(userProgress);
+  } catch (err: any) {
+    res.status(500).json({ error: err.message || 'Internal server error fetching course progress' });
+  }
 });
 
-router.post('/toggle', authenticate, (req: Request, res: Response) => {
+router.post('/toggle', authenticate, async (req: Request, res: Response) => {
   const { lessonId, courseId } = req.body;
   if (!lessonId || !courseId) return res.status(400).json({ error: 'lessonId and courseId are required' });
 
-  const course = courses.find(c => c.id === courseId);
-  if (!course) return res.status(404).json({ error: 'Course not found' });
-  if (!course.lessons.find(l => l.id === lessonId)) return res.status(404).json({ error: 'Lesson not found' });
+  try {
+    const course = await prisma.course.findUnique({
+      where: { id: courseId },
+      include: { lessons: true }
+    });
+    
+    if (!course) return res.status(404).json({ error: 'Course not found' });
+    if (!course.lessons.find(l => l.id === lessonId)) return res.status(404).json({ error: 'Lesson not found' });
 
-  const existing = progress.find(
-    p => p.userId === req.user!.userId && p.lessonId === lessonId && p.courseId === courseId
-  );
+    const existing = await prisma.progress.findUnique({
+      where: {
+        userId_lessonId: {
+          userId: req.user!.userId,
+          lessonId
+        }
+      }
+    });
 
-  if (existing) {
-    existing.completed = !existing.completed;
-    return res.json(existing);
+    if (existing) {
+      const updated = await prisma.progress.update({
+        where: { id: existing.id },
+        data: { completed: !existing.completed }
+      });
+      return res.json(updated);
+    }
+
+    const entry = await prisma.progress.create({
+      data: {
+        userId: req.user!.userId,
+        lessonId,
+        courseId,
+        completed: true
+      }
+    });
+    res.status(201).json(entry);
+  } catch (err: any) {
+    res.status(500).json({ error: err.message || 'Internal server error toggling progress' });
   }
-
-  const entry = { userId: req.user!.userId, lessonId, courseId, completed: true };
-  progress.push(entry);
-  res.status(201).json(entry);
 });
 
 export default router;
