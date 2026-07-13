@@ -28,7 +28,7 @@ export function Navbar() {
   if (user && isDashboardRoute) {
     // Render Dashboard Navbar
     return (
-      <nav className="sticky top-0 z-50 backdrop-blur-md bg-white/90 dark:bg-zinc-900/90 border-b border-zinc-200/80 dark:border-zinc-800/80 shadow-xs px-6 py-3 flex items-center justify-between transition-all duration-300">
+      <nav className="sticky top-0 z-50 backdrop-blur-md bg-card/90 border-b border-border shadow-xs px-6 py-3 flex items-center justify-between transition-all duration-300">
         {/* Brand logo */}
         <Link href={dashboardLink} className="flex items-center gap-2 group">
           <div className={`p-2 rounded-xl bg-gradient-to-tr ${isTeacher ? 'from-indigo-500 to-violet-600 bg-indigo-600' : 'from-blue-600 to-indigo-600 bg-blue-600'} text-white shadow-sm transition-transform duration-300 group-hover:scale-105`}>
@@ -36,7 +36,7 @@ export function Navbar() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.782 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
           </div>
-          <span className="font-extrabold text-lg text-zinc-900 dark:text-white tracking-tight bg-gradient-to-r from-zinc-900 to-zinc-700 dark:from-white dark:to-zinc-300 bg-clip-text text-transparent group-hover:opacity-95 transition-opacity">
+          <span className="font-extrabold text-lg text-foreground tracking-tight bg-gradient-to-r from-zinc-900 to-zinc-700 dark:from-white dark:to-zinc-300 bg-clip-text text-transparent group-hover:opacity-95 transition-opacity">
             LMS Portal
           </span>
         </Link>
@@ -47,8 +47,8 @@ export function Navbar() {
             href={dashboardLink}
             className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
               isActive(dashboardLink)
-                ? 'text-zinc-900 bg-zinc-100 dark:bg-zinc-800 dark:text-white'
-                : 'text-zinc-500 hover:text-zinc-850 dark:hover:text-zinc-200'
+                ? 'bg-slate-100 dark:bg-zinc-800 text-foreground'
+                : 'text-foreground-muted hover:text-foreground'
             }`}
           >
             Dashboard
@@ -57,14 +57,14 @@ export function Navbar() {
             href="/profile"
             className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
               isActive('/profile')
-                ? 'text-zinc-900 bg-zinc-100 dark:bg-zinc-800 dark:text-white'
-                : 'text-zinc-500 hover:text-zinc-850 dark:hover:text-zinc-200'
+                ? 'bg-slate-100 dark:bg-zinc-800 text-foreground'
+                : 'text-foreground-muted hover:text-foreground'
             }`}
           >
             My Profile
           </Link>
 
-          <span className="w-px h-5 bg-zinc-200 dark:bg-zinc-800" />
+          <span className="w-px h-5 bg-border" />
 
           {/* User Badge Info */}
           <div className="flex items-center gap-3">
