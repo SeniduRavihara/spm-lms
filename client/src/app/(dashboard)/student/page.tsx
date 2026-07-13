@@ -142,7 +142,7 @@ export default function StudentDashboard() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="relative overflow-hidden bg-radial from-slate-900 to-zinc-950 p-6 md:p-8 rounded-2xl shadow-xl text-white border border-zinc-800"
+        className="relative overflow-hidden bg-gradient-to-tr from-[#0e2145] via-[#121f3e] to-[#0170ff]/20 p-6 md:p-8 rounded-2xl shadow-xl text-white border border-white/10"
       >
         <div className="absolute right-0 top-0 -mt-4 -mr-4 w-56 h-56 rounded-full bg-blue-500/10 blur-3xl pointer-events-none" />
         <div className="absolute left-1/3 bottom-0 -mb-6 w-48 h-48 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none" />
@@ -160,7 +160,7 @@ export default function StudentDashboard() {
               Ready to learn something new today? Keep pushing your boundaries and track your milestones below.
             </p>
           </div>
-          <div className="bg-zinc-800/60 backdrop-blur-md px-4 py-2.5 rounded-xl border border-zinc-700/50 self-start md:self-auto text-xs md:text-sm text-zinc-300 shadow-sm flex items-center gap-2">
+          <div className="bg-white/10 dark:bg-white/5 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/10 self-start md:self-auto text-xs md:text-sm text-white shadow-sm flex items-center gap-2">
             <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
@@ -183,7 +183,7 @@ export default function StudentDashboard() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay: 0.05 }}
-            className="bg-white dark:bg-zinc-900 p-5 rounded-2xl border border-zinc-150 dark:border-zinc-800/80 shadow-sm hover:shadow-md transition-all duration-300 group"
+            className="bg-card p-5 rounded-2xl border border-border shadow-sm hover:shadow-md transition-all duration-300 group"
           >
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Courses</span>
@@ -194,8 +194,8 @@ export default function StudentDashboard() {
               </div>
             </div>
             <div className="mt-4">
-              <h3 className="text-2xl md:text-3xl font-bold text-zinc-900 dark:text-white">{totalCourses}</h3>
-              <p className="text-xs text-zinc-500 mt-1">Total Enrolled</p>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground">{totalCourses}</h3>
+              <p className="text-xs text-foreground-muted mt-1">Total Enrolled</p>
             </div>
           </motion.div>
 
@@ -204,7 +204,7 @@ export default function StudentDashboard() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="bg-white dark:bg-zinc-900 p-5 rounded-2xl border border-zinc-150 dark:border-zinc-800/80 shadow-sm hover:shadow-md transition-all duration-300 group"
+            className="bg-card p-5 rounded-2xl border border-border shadow-sm hover:shadow-md transition-all duration-300 group"
           >
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">In Progress</span>
@@ -215,8 +215,8 @@ export default function StudentDashboard() {
               </div>
             </div>
             <div className="mt-4">
-              <h3 className="text-2xl md:text-3xl font-bold text-zinc-900 dark:text-white">{inProgressCoursesCount}</h3>
-              <p className="text-xs text-zinc-500 mt-1">Active Modules</p>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground">{inProgressCoursesCount}</h3>
+              <p className="text-xs text-foreground-muted mt-1">Active Modules</p>
             </div>
           </motion.div>
 
@@ -225,7 +225,7 @@ export default function StudentDashboard() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay: 0.15 }}
-            className="bg-white dark:bg-zinc-900 p-5 rounded-2xl border border-zinc-150 dark:border-zinc-800/80 shadow-sm hover:shadow-md transition-all duration-300 group"
+            className="bg-card p-5 rounded-2xl border border-border shadow-sm hover:shadow-md transition-all duration-300 group"
           >
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Completed</span>
@@ -236,8 +236,8 @@ export default function StudentDashboard() {
               </div>
             </div>
             <div className="mt-4">
-              <h3 className="text-2xl md:text-3xl font-bold text-zinc-900 dark:text-white">{completedCoursesCount}</h3>
-              <p className="text-xs text-zinc-500 mt-1">Finished Courses</p>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground">{completedCoursesCount}</h3>
+              <p className="text-xs text-foreground-muted mt-1">Finished Courses</p>
             </div>
           </motion.div>
 
@@ -246,7 +246,7 @@ export default function StudentDashboard() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay: 0.2 }}
-            className="bg-white dark:bg-zinc-900 p-5 rounded-2xl border border-zinc-150 dark:border-zinc-800/80 shadow-sm hover:shadow-md transition-all duration-300 group"
+            className="bg-card p-5 rounded-2xl border border-border shadow-sm hover:shadow-md transition-all duration-300 group"
           >
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Overall Progress</span>
@@ -257,7 +257,7 @@ export default function StudentDashboard() {
               </div>
             </div>
             <div className="mt-4">
-              <h3 className="text-2xl md:text-3xl font-bold text-zinc-900 dark:text-white">{overallPercentage}%</h3>
+              <h3 className="text-2xl md:text-3xl font-bold text-foreground">{overallPercentage}%</h3>
               <div className="mt-2.5 w-full bg-zinc-100 dark:bg-zinc-800 rounded-full h-1.5 overflow-hidden">
                 <div 
                   className="bg-indigo-600 h-1.5 rounded-full transition-all duration-500" 
@@ -276,13 +276,13 @@ export default function StudentDashboard() {
         transition={{ duration: 0.4, delay: 0.25 }}
         className="flex flex-col md:flex-row md:items-center justify-between gap-4 pt-2"
       >
-        <div className="flex items-center overflow-x-auto pb-1 md:pb-0 gap-1.5 bg-zinc-100 dark:bg-zinc-950 p-1.5 rounded-xl border border-zinc-200/60 dark:border-zinc-800/50">
+        <div className="flex items-center overflow-x-auto pb-1 md:pb-0 gap-1.5 bg-card/65 backdrop-blur-md p-1.5 rounded-xl border border-zinc-200/60 dark:border-zinc-800/50">
           <button
             onClick={() => setActiveTab('all')}
             className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all duration-250 whitespace-nowrap ${
               activeTab === 'all'
-                ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm'
-                : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
+                ? 'bg-white dark:bg-zinc-800 text-foreground shadow-sm'
+                : 'text-foreground-muted hover:text-zinc-800 dark:hover:text-zinc-200'
             }`}
           >
             All Courses ({totalCourses})
@@ -291,8 +291,8 @@ export default function StudentDashboard() {
             onClick={() => setActiveTab('in-progress')}
             className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all duration-250 whitespace-nowrap ${
               activeTab === 'in-progress'
-                ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm'
-                : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
+                ? 'bg-white dark:bg-zinc-800 text-foreground shadow-sm'
+                : 'text-foreground-muted hover:text-zinc-800 dark:hover:text-zinc-200'
             }`}
           >
             In Progress ({inProgressCoursesCount})
@@ -301,8 +301,8 @@ export default function StudentDashboard() {
             onClick={() => setActiveTab('completed')}
             className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all duration-250 whitespace-nowrap ${
               activeTab === 'completed'
-                ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm'
-                : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
+                ? 'bg-white dark:bg-zinc-800 text-foreground shadow-sm'
+                : 'text-foreground-muted hover:text-zinc-800 dark:hover:text-zinc-200'
             }`}
           >
             Completed ({completedCoursesCount})
@@ -311,8 +311,8 @@ export default function StudentDashboard() {
             onClick={() => setActiveTab('not-started')}
             className={`px-4 py-2 text-xs font-semibold rounded-lg transition-all duration-250 whitespace-nowrap ${
               activeTab === 'not-started'
-                ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white shadow-sm'
-                : 'text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200'
+                ? 'bg-white dark:bg-zinc-800 text-foreground shadow-sm'
+                : 'text-foreground-muted hover:text-zinc-800 dark:hover:text-zinc-200'
             }`}
           >
             Not Started ({notStartedCoursesCount})
@@ -330,7 +330,7 @@ export default function StudentDashboard() {
             placeholder="Search courses..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-white dark:bg-zinc-900 border border-zinc-250 dark:border-zinc-800 rounded-xl text-sm text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-sm"
+            className="w-full pl-10 pr-4 py-2 bg-card border border-border rounded-xl text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-sm"
           />
           {searchQuery && (
             <button
@@ -353,14 +353,14 @@ export default function StudentDashboard() {
           ))}
         </div>
       ) : filteredCourses.length === 0 ? (
-        <div className="bg-white dark:bg-zinc-900/40 rounded-2xl border border-zinc-200/70 dark:border-zinc-800 p-12 text-center max-w-xl mx-auto shadow-sm">
+        <div className="bg-card/40 rounded-2xl border border-border p-12 text-center max-w-xl mx-auto shadow-sm">
           <div className="w-16 h-16 bg-zinc-50 dark:bg-zinc-850 rounded-full flex items-center justify-center mx-auto text-zinc-400 mb-4">
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.782 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
             </svg>
           </div>
-          <h4 className="text-base font-bold text-zinc-850 dark:text-zinc-200">No courses match your criteria</h4>
-          <p className="mt-1 text-sm text-zinc-500 max-w-sm mx-auto">
+          <h4 className="text-base font-bold text-foreground">No courses match your criteria</h4>
+          <p className="mt-1 text-sm text-foreground-muted max-w-sm mx-auto">
             Try adjusting your search query, clearing filters, or checking back later for newly added materials.
           </p>
           {(searchQuery || activeTab !== 'all') && (
@@ -386,7 +386,7 @@ export default function StudentDashboard() {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
                 whileHover={{ scale: 1.02, y: -4 }}
-                className="group bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200/90 dark:border-zinc-850 shadow-sm hover:shadow-lg hover:border-zinc-300 dark:hover:border-zinc-700/80 transition-all duration-300 flex flex-col h-full overflow-hidden"
+                className="group bg-card rounded-2xl border border-border shadow-sm hover:shadow-lg hover:border-zinc-300 dark:hover:border-zinc-700/80 transition-all duration-300 flex flex-col h-full overflow-hidden"
               >
                 {/* Course Header Gradient Accent */}
                 <div className={`h-2.5 w-full bg-gradient-to-r ${course.color}`} />
@@ -419,10 +419,10 @@ export default function StudentDashboard() {
                     </div>
 
                     {/* Course Title and Description */}
-                    <h3 className="text-lg font-bold text-zinc-900 dark:text-white leading-snug group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
+                    <h3 className="text-lg font-bold text-foreground leading-snug group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
                       {course.title}
                     </h3>
-                    <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400 line-clamp-2 leading-relaxed">
+                    <p className="mt-2 text-sm text-foreground-muted line-clamp-2 leading-relaxed">
                       {course.description}
                     </p>
                   </div>

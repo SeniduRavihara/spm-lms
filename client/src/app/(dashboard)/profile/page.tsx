@@ -83,7 +83,7 @@ export default function ProfilePage() {
   return (
     <div className="max-w-2xl mx-auto space-y-6 pb-12 animate-fade-in">
       <div>
-        <Link href={dashboardLink} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-800 transition-colors font-medium">
+        <Link href={dashboardLink} className="inline-flex items-center gap-1.5 text-sm text-foreground-muted hover:text-zinc-800 transition-colors font-medium">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
@@ -91,19 +91,19 @@ export default function ProfilePage() {
         </Link>
       </div>
 
-      <div className="bg-white dark:bg-zinc-900 rounded-2xl border border-zinc-200/90 dark:border-zinc-850 shadow-md overflow-hidden">
+      <div className="bg-card rounded-2xl border border-border shadow-md overflow-hidden">
         {/* Banner with color theme */}
         <div className={`h-24 bg-gradient-to-r ${isTeacher ? 'from-indigo-600 to-violet-700' : 'from-blue-600 to-indigo-700'}`} />
 
         <div className="px-6 pb-8 relative">
           {/* Avatar and Role */}
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between -mt-10 mb-6 gap-4">
-            <div className="flex items-end gap-4.5">
-              <div className={`w-20 h-20 rounded-2xl bg-gradient-to-tr ${avatarBg} text-white flex items-center justify-center text-3xl font-extrabold shadow-lg border-4 border-white dark:border-zinc-900 z-10`}>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between -mt-10 mb-6 gap-4">
+            <div className="flex items-center gap-4.5">
+              <div className={`w-20 h-20 rounded-2xl bg-gradient-to-tr ${avatarBg} text-white flex items-center justify-center text-3xl font-extrabold shadow-lg border-4 border-white dark:border-[#1e1f26] z-10`}>
                 {user.name.split(' ').map(n => n[0]).join('')}
               </div>
-              <div className="pb-1">
-                <h1 className="text-xl font-bold text-zinc-900 dark:text-white leading-tight">{user.name}</h1>
+              <div className="py-1">
+                <h1 className="text-xl font-bold text-foreground leading-tight">{user.name}</h1>
                 <p className="text-xs text-zinc-400 mt-0.5">{user.email}</p>
               </div>
             </div>
@@ -113,7 +113,7 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          <hr className="border-zinc-100 dark:border-zinc-800/80 mb-6" />
+          <hr className="border-border mb-6" />
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -137,65 +137,65 @@ export default function ProfilePage() {
 
             <div className="grid gap-5 sm:grid-cols-2">
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Full Name</label>
+                <label className="text-xs font-bold text-foreground-muted uppercase tracking-wider">Full Name</label>
                 <input
                   type="text"
                   required
                   value={name}
                   onChange={e => setName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 bg-white dark:bg-zinc-950 border border-zinc-250 dark:border-zinc-850 rounded-xl text-sm text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-sm transition"
+                  className="w-full px-3.5 py-2.5 bg-card border border-border rounded-xl text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-sm transition"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Email Address</label>
+                <label className="text-xs font-bold text-foreground-muted uppercase tracking-wider">Email Address</label>
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  className="w-full px-3.5 py-2.5 bg-white dark:bg-zinc-950 border border-zinc-250 dark:border-zinc-850 rounded-xl text-sm text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-sm transition"
+                  className="w-full px-3.5 py-2.5 bg-card border border-border rounded-xl text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-sm transition"
                 />
               </div>
             </div>
 
             <div className="pt-2">
-              <h3 className="text-sm font-bold text-zinc-850 dark:text-white mb-1">Change Password</h3>
+              <h3 className="text-sm font-bold text-foreground mb-1">Change Password</h3>
               <p className="text-xs text-zinc-400 mb-4">Leave password fields blank if you do not want to change your password.</p>
               
               <div className="space-y-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Current Password</label>
+                  <label className="text-xs font-bold text-foreground-muted uppercase tracking-wider">Current Password</label>
                   <input
                     type="password"
                     placeholder="Enter current password to verify changes"
                     value={currentPassword}
                     onChange={e => setCurrentPassword(e.target.value)}
                     required={!!newPassword}
-                    className="w-full px-3.5 py-2.5 bg-white dark:bg-zinc-950 border border-zinc-250 dark:border-zinc-850 rounded-xl text-sm text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-sm transition"
+                    className="w-full px-3.5 py-2.5 bg-card border border-border rounded-xl text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-sm transition"
                   />
                 </div>
 
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider">New Password</label>
+                    <label className="text-xs font-bold text-foreground-muted uppercase tracking-wider">New Password</label>
                     <input
                       type="password"
                       placeholder="At least 6 characters"
                       value={newPassword}
                       onChange={e => setNewPassword(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-white dark:bg-zinc-950 border border-zinc-250 dark:border-zinc-850 rounded-xl text-sm text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-sm transition"
+                      className="w-full px-3.5 py-2.5 bg-card border border-border rounded-xl text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-sm transition"
                     />
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider">Confirm New Password</label>
+                    <label className="text-xs font-bold text-foreground-muted uppercase tracking-wider">Confirm New Password</label>
                     <input
                       type="password"
                       placeholder="Repeat new password"
                       value={confirmPassword}
                       onChange={e => setConfirmPassword(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-white dark:bg-zinc-950 border border-zinc-250 dark:border-zinc-850 rounded-xl text-sm text-zinc-800 dark:text-zinc-200 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-sm transition"
+                      className="w-full px-3.5 py-2.5 bg-card border border-border rounded-xl text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-sm transition"
                     />
                   </div>
                 </div>
