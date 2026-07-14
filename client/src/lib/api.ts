@@ -21,6 +21,13 @@ export const api = {
     me: () => request('/auth/me'),
     updateProfile: (data: { name?: string; email?: string; currentPassword?: string; newPassword?: string }) =>
       request('/auth/profile', { method: 'PUT', body: JSON.stringify(data) }),
+    listStudents: () => request('/auth/students'),
+    createStudent: (data: { name: string; email: string; password: string }) =>
+      request('/auth/students', { method: 'POST', body: JSON.stringify(data) }),
+    updateStudent: (id: string, data: { name?: string; email?: string; password?: string }) =>
+      request(`/auth/students/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
+    deleteStudent: (id: string) =>
+      request(`/auth/students/${id}`, { method: 'DELETE' }),
   },
   courses: {
     list: () => request('/courses'),
