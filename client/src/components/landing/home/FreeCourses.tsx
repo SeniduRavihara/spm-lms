@@ -77,7 +77,7 @@ export default function FreeCourses() {
               <h3 className="text-2xl font-medium text-white mb-2">Need skills but budget constraints?</h3>
               <p className="text-white/80">Explore top-quality free courses and start advancing your skills even more affordably online today.</p>
            </div>
-           <Link href="/courses" className="px-8 py-4 bg-white text-primary font-medium rounded-md flex items-center gap-2 hover:bg-white/90 transition-all whitespace-nowrap">
+           <Link href="/dashboard" className="px-8 py-4 bg-white text-primary font-medium rounded-md flex items-center gap-2 hover:bg-white/90 transition-all whitespace-nowrap">
               Explore Free Courses
            </Link>
         </div>

@@ -52,7 +52,7 @@ export default function HeroSection() {
 
             <div className="flex flex-wrap gap-5 mb-12">
               <Link
-                href={user ? "/courses" : "/login"}
+                href={user ? "/dashboard" : "/login"}
                 className="px-8 py-4 bg-[#438eff] dark:bg-[#438eff] text-white dark:text-[#0e2145] font-black rounded-full transition-all shadow-xl shadow-primary/20 flex items-center gap-3 text-[15px]"
               >
                 <svg width="24px" height="24px" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

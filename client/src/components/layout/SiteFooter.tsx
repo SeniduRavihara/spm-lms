@@ -48,7 +48,7 @@ export function Newsletter() {
                  />
               </h3>
               <Link 
-                  href={user ? "/courses" : "/login"}
+                  href={user ? "/dashboard" : "/login"}
                   className="mt-8 px-10 py-5 bg-white text-primary text-[15px] font-black rounded-md inline-flex items-center gap-3 hover:bg-white/90 transition-all shadow-2xl"
                >
                   Enroll in Courses
@@ -102,7 +102,7 @@ export function SiteFooter() {
              <h4 className="text-[16px] font-medium text-white mb-8">Quick Links</h4>
              <ul className="space-y-4 text-[13.5px] text-[#c4c9d4]/70">
                 <li><Link href="/" className="hover:text-primary transition-colors">Home</Link></li>
-                <li><Link href="/courses" className="hover:text-primary transition-colors">Courses</Link></li>
+                <li><Link href="/dashboard" className="hover:text-primary transition-colors">Courses</Link></li>
                 <li><Link href="#" className="hover:text-primary transition-colors">About us</Link></li>
                 <li><Link href="#" className="hover:text-primary transition-colors">Contact us</Link></li>
              </ul>

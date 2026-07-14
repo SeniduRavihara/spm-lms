@@ -63,7 +63,7 @@ export default function TopRatedCourses() {
                   </p>
                </div>
                <Link
-                href="/courses"
+                href="/dashboard"
                 className="relative z-10 inline-flex items-center gap-2 text-primary font-medium hover:underline group/btn"
               >
                 View More

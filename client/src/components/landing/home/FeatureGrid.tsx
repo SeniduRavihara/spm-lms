@@ -68,7 +68,7 @@ export default function FeatureGrid() {
             </ul>
 
             <Link
-              href={user ? "/courses" : "/login"}
+              href={user ? "/dashboard" : "/login"}
               className="px-8 py-4 bg-primary hover:bg-primary/90 text-white font-medium rounded-md transition-all shadow-lg shadow-primary/25 flex items-center gap-2.5 text-sm w-fit"
             >
               <div className="w-8 h-8 rounded-md bg-white/20 flex items-center justify-center">

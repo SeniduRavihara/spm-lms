@@ -69,7 +69,7 @@ export default function SiteNavbar() {
           {/* Navigation Links */}
           <div className="hidden xl:flex items-center gap-8">
             <NavLink href="/">Home</NavLink>
-            <NavLink href={user ? "/courses" : "/login"}>Courses</NavLink>
+            <NavLink href={user ? "/dashboard" : "/login"}>Courses</NavLink>
             <NavLink href="/instructors">Instructors</NavLink>
             <NavLink href="/store">Store</NavLink>
             <NavLink href="/forums">Forums</NavLink>
@@ -80,7 +80,7 @@ export default function SiteNavbar() {
           <div className="flex items-center gap-4">
         
             <Link
-              href={user ? "/courses" : "/login"}
+              href={user ? "/dashboard" : "/login"}
               className="px-8 py-3.5 bg-[#438eff] text-white dark:text-[#0e2145] font-medium rounded-md shadow-lg transition-all flex items-center gap-2 text-[15px]"
             >
               <IcoStudents size={22} />

@@ -59,7 +59,7 @@ export default function BestsellerCourses() {
                   </p>
                </div>
                <Link
-                href="/courses"
+                href="/dashboard"
                 className="relative z-10 inline-flex items-center gap-2 text-white font-medium hover:underline group/btn"
               >
                 View More
