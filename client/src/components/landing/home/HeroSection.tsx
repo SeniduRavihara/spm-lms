@@ -33,7 +33,7 @@ export default function HeroSection() {
                   New
                </span>
                <span className="text-[14px] font-light text-slate-900 dark:text-slate-300 pr-3 flex items-center gap-2">
-                  AI Courses Added!
+                  Automated CD Active!
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-900/60 dark:text-slate-500 group-hover:translate-x-1 transition-transform">
                     <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
                   </svg>
@@ -41,7 +41,7 @@ export default function HeroSection() {
             </div>
 
             <h1 className="text-[54px] md:text-[72px] font-black text-foreground leading-[1] mb-8 tracking-[-0.05em]">
-              Start <span className="text-primary">Learning</span>
+              Start <span className="text-primary">Succeeding</span>
               <br />
               <span className="text-foreground/90">With Top Tutors</span>
             </h1>
