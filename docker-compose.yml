@@ -11,6 +11,7 @@ services:
       - DATABASE_URL=${DATABASE_URL}
       - JWT_SECRET=${JWT_SECRET}
       - PORT=4000
+      - NODE_OPTIONS=--dns-result-order=ipv4first
     restart: always
 
   client:
