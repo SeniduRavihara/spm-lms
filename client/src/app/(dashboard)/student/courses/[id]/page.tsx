@@ -107,25 +107,25 @@ export default function StudentCoursePage() {
       </Link>
 
       {/* Header Card */}
-      <div className="rounded-2xl border border-blue-100 bg-gradient-to-br from-white to-blue-50/30 p-8 shadow-xl mb-8">
+      <div className="rounded-2xl border border-border bg-linear-to-br from-card to-card/50 p-8 shadow-xl mb-8">
         <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-bold">
+          <span className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-bold">
             Interactive Learning
           </span>
         </div>
-        <h1 className="text-3xl font-extrabold text-gray-900 mb-3">{course.title}</h1>
-        <p className="text-gray-600 text-lg leading-relaxed">{course.description || 'No description provided.'}</p>
+        <h1 className="text-3xl font-extrabold text-foreground mb-3">{course.title}</h1>
+        <p className="text-foreground-muted text-lg leading-relaxed">{course.description || 'No description provided.'}</p>
       </div>
 
       {/* Progress Header Card */}
-      <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-md mb-8">
+      <div className="rounded-2xl border border-border bg-card p-6 shadow-md mb-8">
         <div className="flex justify-between items-center mb-3">
-          <span className="text-sm font-bold text-gray-700">Course Syllabus Progress</span>
-          <span className="text-sm font-extrabold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">
+          <span className="text-sm font-bold text-foreground">Course Syllabus Progress</span>
+          <span className="text-sm font-extrabold text-primary bg-primary/10 px-3 py-1 rounded-full">
             {completedLessons}/{totalLessons} Lessons ({progressPct}%)
           </span>
         </div>
-        <div className="h-4 bg-gray-100 rounded-full overflow-hidden border border-gray-100">
+        <div className="h-4 bg-muted rounded-full overflow-hidden border border-border">
           <motion.div
             className="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-cyan-500 rounded-full"
             initial={{ width: 0 }}
@@ -136,7 +136,7 @@ export default function StudentCoursePage() {
       </div>
 
       {/* Syllabus Lessons Checklist */}
-      <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+      <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
         <span className="text-lg">📚</span> Course Lessons
       </h2>
 
@@ -154,16 +154,16 @@ export default function StudentCoursePage() {
                 onClick={() => handleToggle(lesson.id)}
                 className={`flex items-center justify-between p-4 border rounded-xl cursor-pointer select-none transition-all duration-200 ${
                   isCompleted
-                    ? 'border-green-200 bg-green-50/30 hover:border-green-300'
-                    : 'border-gray-200 bg-white hover:border-blue-300 hover:shadow-md'
+                    ? 'border-success/30 bg-success/5 hover:border-success/50'
+                    : 'border-border bg-card hover:border-primary/50 hover:shadow-md'
                 }`}
               >
                 <div className="flex items-center gap-4 flex-1">
                   {/* Custom Checkbox */}
                   <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
                     isCompleted
-                      ? 'border-green-500 bg-green-500 text-white'
-                      : 'border-gray-300 bg-white group-hover:border-blue-500'
+                      ? 'border-success bg-success text-white'
+                      : 'border-border bg-background group-hover:border-primary'
                   }`}>
                     {isCompleted && (
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -171,7 +171,7 @@ export default function StudentCoursePage() {
                       </svg>
                     )}
                   </div>
-                  <span className={`font-semibold text-gray-800 transition ${isCompleted ? 'line-through text-gray-400' : ''}`}>
+                  <span className={`font-semibold text-foreground transition ${isCompleted ? 'line-through text-foreground-muted/60' : ''}`}>
                     {lesson.title}
                   </span>
                 </div>
@@ -179,8 +179,8 @@ export default function StudentCoursePage() {
                 <div className="flex items-center gap-2">
                   <span className={`text-xs font-semibold px-2 py-0.5 rounded ${
                     isCompleted
-                      ? 'bg-green-100 text-green-700'
-                      : 'bg-gray-100 text-gray-500'
+                      ? 'bg-success/10 text-success'
+                      : 'bg-muted text-foreground-muted'
                   }`}>
                     {isCompleted ? 'Completed' : 'Pending'}
                   </span>
@@ -191,7 +191,7 @@ export default function StudentCoursePage() {
         </AnimatePresence>
 
         {totalLessons === 0 && (
-          <div className="rounded-xl border border-dashed border-gray-300 p-8 text-center text-gray-400 bg-white">
+          <div className="rounded-xl border border-dashed border-border p-8 text-center text-foreground-muted bg-card">
             There are no lessons uploaded for this course yet.
           </div>
         )}

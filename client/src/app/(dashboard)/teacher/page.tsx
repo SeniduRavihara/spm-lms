@@ -79,7 +79,7 @@ export default function TeacherDashboard() {
   // Handle URL hash changes to toggle active tab
   useEffect(() => {
     const handleHash = () => {
-      const hash = window.location.hash;
+      const hash = typeof window !== 'undefined' ? window.location.hash : '';
       if (hash === '#students') {
         setActiveTab('students');
       } else {
@@ -89,7 +89,14 @@ export default function TeacherDashboard() {
 
     handleHash();
     window.addEventListener('hashchange', handleHash);
-    return () => window.removeEventListener('hashchange', handleHash);
+    
+    // Fallback timer to capture URL hash immediately after hydration is fully done
+    const timer = setTimeout(handleHash, 50);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHash);
+      clearTimeout(timer);
+    };
   }, []);
 
   // Fetch initial dashboard metrics and entities
@@ -378,7 +385,6 @@ export default function TeacherDashboard() {
                       className="rounded-2xl border border-border bg-card p-6 shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between"
                     >
                       <div>
-                        <div className={`h-2.5 w-full rounded-full bg-gradient-to-r ${course.color} mb-4`}></div>
                         <h3 className="text-md font-bold text-foreground mb-1 line-clamp-1">{course.title}</h3>
                         <p className="text-xs text-foreground-muted mb-4 line-clamp-2">{course.description || 'No description provided.'}</p>
                       </div>
@@ -480,7 +486,7 @@ export default function TeacherDashboard() {
             </div>
           </div>
 
-          {/* Student Grid list */}
+          {/* Student List View */}
           {filteredStudents.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-border p-12 text-center text-foreground-muted bg-card max-w-xl mx-auto">
               <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-zinc-800 flex items-center justify-center mx-auto mb-3">
@@ -490,50 +496,57 @@ export default function TeacherDashboard() {
               <p className="text-xs mt-1">Try refining your search query or add a new student using the button above.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredStudents.map((student) => (
-                <div 
-                  key={student.id}
-                  className="bg-card rounded-2xl border border-border p-5 flex flex-col justify-between shadow-xs hover:shadow-md transition"
-                >
-                  <div>
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold text-lg">
-                        {student.name.split(' ').map(n => n[0]).join('')}
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-foreground text-sm leading-tight">{student.name}</h4>
-                        <p className="text-xs text-foreground-muted flex items-center gap-1.5 mt-0.5">
-                          <Mail className="w-3 h-3 shrink-0" />
-                          <span className="truncate max-w-[170px]">{student.email}</span>
-                        </p>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center gap-1.5 text-[11px] text-foreground-muted pt-3 border-t border-border/60">
-                      <Calendar className="w-3.5 h-3.5" />
-                      <span>Joined {new Date(student.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-end gap-2 mt-5 pt-1">
-                    <button
-                      onClick={() => openEditStudentModal(student)}
-                      className="p-2 rounded-lg text-primary hover:bg-primary/10 border border-border cursor-pointer transition-colors"
-                      title="Edit student details"
-                    >
-                      <Edit2 className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => handleDeleteStudent(student.id)}
-                      className="p-2 rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20 border border-border cursor-pointer transition-colors"
-                      title="Remove student"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </button>
-                  </div>
-                </div>
-              ))}
+            <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-xs">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="border-b border-border bg-slate-50/50 dark:bg-zinc-900/30">
+                      <th className="px-6 py-4 text-xs font-bold text-foreground-muted uppercase tracking-wider">Student</th>
+                      <th className="px-6 py-4 text-xs font-bold text-foreground-muted uppercase tracking-wider">Email Address</th>
+                      <th className="px-6 py-4 text-xs font-bold text-foreground-muted uppercase tracking-wider">Registration Date</th>
+                      <th className="px-6 py-4 text-xs font-bold text-foreground-muted uppercase tracking-wider text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-border/60">
+                    {filteredStudents.map((student) => (
+                      <tr key={student.id} className="hover:bg-slate-50/30 dark:hover:bg-zinc-900/10 transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-xl bg-primary/10 text-primary flex items-center justify-center font-bold text-sm shrink-0">
+                              {student.name.split(' ').map(n => n[0]).join('')}
+                            </div>
+                            <span className="font-bold text-foreground text-sm">{student.name}</span>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <span className="text-sm text-foreground-muted">{student.email}</span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-foreground-muted">
+                          {new Date(student.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-right">
+                          <div className="flex items-center justify-end gap-1.5">
+                            <button
+                              onClick={() => openEditStudentModal(student)}
+                              className="p-1.5 rounded-lg text-primary hover:bg-primary/10 border border-border/50 cursor-pointer transition-colors"
+                              title="Edit student"
+                            >
+                              <Edit2 className="w-3.5 h-3.5" />
+                            </button>
+                            <button
+                              onClick={() => handleDeleteStudent(student.id)}
+                              className="p-1.5 rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20 border border-border/50 cursor-pointer transition-colors"
+                              title="Remove student"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           )}
         </div>

@@ -388,9 +388,6 @@ export default function StudentDashboard() {
                 whileHover={{ scale: 1.02, y: -4 }}
                 className="group bg-card rounded-2xl border border-border shadow-sm hover:shadow-lg hover:border-zinc-300 dark:hover:border-zinc-700/80 transition-all duration-300 flex flex-col h-full overflow-hidden"
               >
-                {/* Course Header Gradient Accent */}
-                <div className={`h-2.5 w-full bg-gradient-to-r ${course.color}`} />
-
                 <div className="p-6 flex-1 flex flex-col justify-between">
                   <div>
                     {/* Card Header Badge and Menu */}

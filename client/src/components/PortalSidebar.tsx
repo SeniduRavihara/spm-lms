@@ -22,6 +22,17 @@ export default function PortalSidebar({ onCollapseChange }: PortalSidebarProps) 
   const pathname = usePathname();
   const { user, logout } = useAuth();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [hash, setHash] = useState('');
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const handleHash = () => {
+      setHash(window.location.hash);
+    };
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, [pathname]);
 
   useEffect(() => {
     const saved = localStorage.getItem('sidebar-collapsed');
@@ -46,7 +57,7 @@ export default function PortalSidebar({ onCollapseChange }: PortalSidebarProps) 
   const menuItems = isTeacher
     ? [
         { label: 'Dashboard', href: '/teacher', icon: LayoutDashboard },
-        { label: 'Students', href: '/teacher/students-directory', isTabTrigger: true, icon: Users },
+        { label: 'Students', href: '/teacher#students', icon: Users },
         { label: 'My Profile', href: '/profile', icon: UserCircle },
       ]
     : [
@@ -109,26 +120,25 @@ export default function PortalSidebar({ onCollapseChange }: PortalSidebarProps) 
           {menuItems.map((item) => {
             const ActiveIcon = item.icon;
             
-            // Special routing check: for tabs triggers, check if pathname matches base dashboard or specific route
-            const isTabActive = item.isTabTrigger 
-              ? pathname === '/teacher' && typeof window !== 'undefined' && localStorage.getItem('teacher-active-tab') === 'students'
-              : isActive(item.href) && !(item.href === '/teacher' && typeof window !== 'undefined' && localStorage.getItem('teacher-active-tab') === 'students');
-
-            const handleItemClick = (e: React.MouseEvent) => {
-              if (item.isTabTrigger) {
-                e.preventDefault();
-                localStorage.setItem('teacher-active-tab', 'students');
-                window.location.href = '/teacher';
-              } else if (item.href === '/teacher') {
-                localStorage.setItem('teacher-active-tab', 'courses');
-              }
-            };
+            // Check active state using path and hash
+            const isTabActive = item.href.includes('#')
+              ? pathname === item.href.split('#')[0] && hash === '#' + item.href.split('#')[1]
+              : pathname === item.href && (pathname !== '/teacher' || hash !== '#students');
 
             return (
               <Link
                 key={item.label}
                 href={item.href}
-                onClick={handleItemClick}
+                onClick={(e) => {
+                  if (item.href.includes('#')) {
+                    const [path, newHash] = item.href.split('#');
+                    if (pathname === path) {
+                      window.location.hash = newHash;
+                    }
+                  } else if (item.href === '/teacher' && pathname === '/teacher') {
+                    window.location.hash = '';
+                  }
+                }}
                 className={`flex items-center gap-3.5 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 cursor-pointer ${
                   isTabActive
                     ? 'bg-primary/10 text-primary'

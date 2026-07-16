@@ -30,7 +30,7 @@ export default function ProfilePage() {
 
   if (loading || !user) {
     return (
-      <div className="flex flex-1 items-center justify-center min-h-[400px]">
+      <div className="flex flex-1 items-center justify-center min-h-100">
         <div className="animate-spin h-8 w-8 border-4 border-blue-600 border-t-transparent rounded-full" />
       </div>
     );
@@ -83,7 +83,7 @@ export default function ProfilePage() {
   return (
     <div className="max-w-2xl mx-auto space-y-6 pb-12 animate-fade-in">
       <div>
-        <Link href={dashboardLink} className="inline-flex items-center gap-1.5 text-sm text-foreground-muted hover:text-zinc-800 transition-colors font-medium">
+        <Link href={dashboardLink} className="inline-flex items-center gap-1.5 text-sm text-foreground-muted hover:text-zinc-800 dark:hover:text-zinc-300 transition-colors font-medium">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
@@ -93,18 +93,18 @@ export default function ProfilePage() {
 
       <div className="bg-card rounded-2xl border border-border shadow-md overflow-hidden">
         {/* Banner with color theme */}
-        <div className={`h-24 bg-gradient-to-r ${isTeacher ? 'from-indigo-600 to-violet-700' : 'from-blue-600 to-indigo-700'}`} />
+        <div className={`h-24 bg-linear-to-r ${isTeacher ? 'from-indigo-600 to-violet-700' : 'from-blue-600 to-indigo-700'}`} />
 
         <div className="px-6 pb-8 relative">
           {/* Avatar and Role */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between -mt-10 mb-6 gap-4">
-            <div className="flex items-center gap-4.5">
-              <div className={`w-20 h-20 rounded-2xl bg-gradient-to-tr ${avatarBg} text-white flex items-center justify-center text-3xl font-extrabold shadow-lg border-4 border-white dark:border-[#1e1f26] z-10`}>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-6 gap-4">
+            <div className="flex items-end gap-4">
+              <div className={`-mt-10 w-20 h-20 rounded-2xl bg-linear-to-tr ${avatarBg} text-white flex items-center justify-center text-3xl font-extrabold shadow-lg border-4 border-white dark:border-[#1e1f26] z-10`}>
                 {user.name.split(' ').map(n => n[0]).join('')}
               </div>
-              <div className="py-1">
-                <h1 className="text-xl font-bold text-foreground leading-tight">{user.name}</h1>
-                <p className="text-xs text-zinc-400 mt-0.5">{user.email}</p>
+              <div className="mb-2">
+                <h1 className="text-2xl font-bold text-foreground leading-tight">{user.name}</h1>
+                <p className="text-sm text-zinc-400 mt-0.5">{user.email}</p>
               </div>
             </div>
             <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border ${roleColors} self-start sm:self-auto`}>

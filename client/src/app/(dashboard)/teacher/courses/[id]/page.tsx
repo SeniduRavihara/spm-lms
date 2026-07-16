@@ -114,19 +114,19 @@ export default function CourseDetailPage() {
       </Link>
 
       {/* Course Detail Card */}
-      <div className="rounded-2xl border border-purple-100 bg-gradient-to-br from-white to-purple-50/20 p-8 shadow-xl mb-8">
+      <div className="rounded-2xl border border-border bg-linear-to-br from-card to-card/50 p-8 shadow-xl mb-8">
         <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs bg-purple-100 text-purple-700 px-3 py-1 rounded-full font-bold">
+          <span className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-bold">
             Syllabus Manager
           </span>
         </div>
-        <h1 className="text-3xl font-extrabold text-gray-900 mb-3">{course.title}</h1>
-        <p className="text-gray-600 text-lg leading-relaxed">{course.description || 'No description provided.'}</p>
+        <h1 className="text-3xl font-extrabold text-foreground mb-3">{course.title}</h1>
+        <p className="text-foreground-muted text-lg leading-relaxed">{course.description || 'No description provided.'}</p>
       </div>
 
       {/* Adding Lesson Card */}
-      <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-md mb-8">
-        <h2 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+      <div className="rounded-2xl border border-border bg-card p-6 shadow-md mb-8">
+        <h2 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
           <span>📝</span> Add New Syllabus Lesson
         </h2>
         <form onSubmit={handleAddLesson} className="flex flex-col sm:flex-row gap-3">
@@ -136,7 +136,7 @@ export default function CourseDetailPage() {
             required
             value={newLesson}
             onChange={(e) => setNewLesson(e.target.value)}
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition text-sm bg-white"
+            className="flex-1 px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition text-sm bg-background text-foreground"
           />
           <Button
             type="submit"
@@ -148,7 +148,7 @@ export default function CourseDetailPage() {
       </div>
 
       {/* Syllabus Lessons Checklist */}
-      <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+      <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
         <span className="text-lg">📚</span> Syllabus Lessons ({course.lessons.length})
       </h2>
 
@@ -162,13 +162,13 @@ export default function CourseDetailPage() {
               exit={{ opacity: 0, scale: 0.95, y: -10 }}
               transition={{ duration: 0.25 }}
               whileHover={{ scale: 1.01, y: -1 }}
-              className="flex items-center justify-between p-4 border border-gray-200 bg-white rounded-xl shadow-sm hover:border-blue-300 hover:shadow-md transition-all duration-200"
+              className="flex items-center justify-between p-4 border border-border bg-card rounded-xl shadow-sm hover:border-primary/50 hover:shadow-md transition-all duration-200"
             >
               <div className="flex items-center gap-3">
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-50 text-blue-600 text-xs font-bold border border-blue-100">
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary text-xs font-bold border border-primary/20">
                   {idx + 1}
                 </span>
-                <span className="font-semibold text-gray-800">{lesson.title}</span>
+                <span className="font-semibold text-foreground">{lesson.title}</span>
               </div>
               <Button
                 onClick={() => handleDeleteLesson(lesson.id)}
@@ -183,7 +183,7 @@ export default function CourseDetailPage() {
         </AnimatePresence>
 
         {course.lessons.length === 0 && (
-          <div className="rounded-xl border border-dashed border-gray-300 p-8 text-center text-gray-400 bg-white">
+          <div className="rounded-xl border border-dashed border-border p-8 text-center text-foreground-muted bg-card">
             There are no lessons published for this syllabus yet. Use the tool above to add lessons.
           </div>
         )}
