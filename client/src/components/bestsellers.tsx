@@ -5,6 +5,7 @@ import { CourseCard } from '@/components/course-card'
 import { Button } from '@/components/ui/button'
 
 const bestsellers = [
+  
   {
     id: '5',
     title: 'New-In LMS System',
