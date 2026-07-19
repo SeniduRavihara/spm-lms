@@ -34,6 +34,7 @@ model Course {
 model Lesson {
   id        String     @id @default(uuid())
   title     String
+  videoUrl  String?    @default("")
   courseId  String
   course    Course     @relation(fields: [courseId], references: [id], onDelete: Cascade)
   progress  Progress[]

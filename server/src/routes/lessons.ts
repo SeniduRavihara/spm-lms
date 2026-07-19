@@ -5,7 +5,7 @@ import { authenticate, requireRole } from '../middleware/auth';
 const router = Router();
 
 router.post('/', authenticate, requireRole('teacher'), async (req: Request, res: Response) => {
-  const { courseId, title } = req.body;
+  const { courseId, title, videoUrl } = req.body;
   if (!courseId || !title) return res.status(400).json({ error: 'courseId and title are required' });
 
   try {
@@ -14,7 +14,7 @@ router.post('/', authenticate, requireRole('teacher'), async (req: Request, res:
     if (course.teacherId !== req.user!.userId) return res.status(403).json({ error: 'Not your course' });
 
     const lesson = await prisma.lesson.create({
-      data: { title, courseId }
+      data: { title, courseId, videoUrl: videoUrl || '' }
     });
     res.status(201).json(lesson);
   } catch (err: any) {
@@ -23,7 +23,7 @@ router.post('/', authenticate, requireRole('teacher'), async (req: Request, res:
 });
 
 router.put('/:id', authenticate, requireRole('teacher'), async (req: Request, res: Response) => {
-  const { title } = req.body;
+  const { title, videoUrl } = req.body;
   if (!title) return res.status(400).json({ error: 'Title is required' });
 
   try {
@@ -36,13 +36,14 @@ router.put('/:id', authenticate, requireRole('teacher'), async (req: Request, re
 
     const updated = await prisma.lesson.update({
       where: { id: req.params.id },
-      data: { title }
+      data: { title, videoUrl: videoUrl !== undefined ? videoUrl : lesson.videoUrl }
     });
     
     // Omit the loaded relation from the response structure to keep it clean
     const responsePayload = {
       id: updated.id,
       title: updated.title,
+      videoUrl: updated.videoUrl,
       courseId: updated.courseId
     };
     

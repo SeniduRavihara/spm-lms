@@ -40,9 +40,9 @@ async function main() {
       teacherId,
       lessons: {
         create: [
-          { title: 'Variables & Data Types' },
-          { title: 'Control Flow' },
-          { title: 'Functions' }
+          { title: 'Variables & Data Types', videoUrl: 'https://www.youtube.com/watch?v=kqtD5dpn9C8' },
+          { title: 'Control Flow', videoUrl: 'https://www.youtube.com/watch?v=2c-T3rN4c7k' },
+          { title: 'Functions', videoUrl: 'https://www.youtube.com/watch?v=N8ap4k_1QEQ' }
         ]
       }
     }
@@ -56,8 +56,8 @@ async function main() {
       teacherId,
       lessons: {
         create: [
-          { title: 'HTML Structure' },
-          { title: 'CSS Styling' }
+          { title: 'HTML Structure', videoUrl: 'https://www.youtube.com/watch?v=ok-plXXHl_E' },
+          { title: 'CSS Styling', videoUrl: 'https://www.youtube.com/watch?v=yfoY53QXEnI' }
         ]
       }
     }
@@ -71,10 +71,10 @@ async function main() {
       teacherId,
       lessons: {
         create: [
-          { title: 'Relational Database Concepts' },
-          { title: 'Designing Database Schemas' },
-          { title: 'Writing SQL Queries' },
-          { title: 'Joins & Aggregations' }
+          { title: 'Relational Database Concepts', videoUrl: 'https://www.youtube.com/watch?v=HXV3zeQKqGY' },
+          { title: 'Designing Database Schemas', videoUrl: 'https://www.youtube.com/watch?v=wR0jg0eQsZA' },
+          { title: 'Writing SQL Queries', videoUrl: 'https://www.youtube.com/watch?v=HXV3zeQKqGY' },
+          { title: 'Joins & Aggregations', videoUrl: 'https://www.youtube.com/watch?v=9yeEl15MC1g' }
         ]
       }
     }
@@ -88,10 +88,10 @@ async function main() {
       teacherId,
       lessons: {
         create: [
-          { title: 'React Rendering & Reconciliation' },
-          { title: 'Custom Hooks Patterns' },
-          { title: 'State Management with Zustand' },
-          { title: 'React Server Components (RSC)' }
+          { title: 'React Rendering & Reconciliation', videoUrl: 'https://www.youtube.com/watch?v=7YhdqIR2Yzo' },
+          { title: 'Custom Hooks Patterns', videoUrl: 'https://www.youtube.com/watch?v=J-g9ZJha0y4' },
+          { title: 'State Management with Zustand', videoUrl: 'https://www.youtube.com/watch?v=482vW8440_Q' },
+          { title: 'React Server Components (RSC)', videoUrl: 'https://www.youtube.com/watch?v=rGPpQdbDbwo' }
         ]
       }
     }
@@ -105,10 +105,10 @@ async function main() {
       teacherId,
       lessons: {
         create: [
-          { title: 'Cloud Architecture Fundamentals' },
-          { title: 'Virtual Servers & Containers (Docker)' },
-          { title: 'Serverless Functions' },
-          { title: 'Cloud Monitoring & Auto-Scaling' }
+          { title: 'Cloud Architecture Fundamentals', videoUrl: 'https://www.youtube.com/watch?v=3g8_a5n2Ugw' },
+          { title: 'Virtual Servers & Containers (Docker)', videoUrl: 'https://www.youtube.com/watch?v=fqMOX6JJhGo' },
+          { title: 'Serverless Functions', videoUrl: 'https://www.youtube.com/watch?v=w95B5ax0N7E' },
+          { title: 'Cloud Monitoring & Auto-Scaling', videoUrl: 'https://www.youtube.com/watch?v=3M_E2v4B9k8' }
         ]
       }
     }

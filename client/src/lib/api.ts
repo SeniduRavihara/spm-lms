@@ -41,10 +41,10 @@ export const api = {
     delete: (id: string) => request(`/courses/${id}`, { method: 'DELETE' }),
   },
   lessons: {
-    create: (courseId: string, title: string) =>
-      request('/lessons', { method: 'POST', body: JSON.stringify({ courseId, title }) }),
-    update: (id: string, title: string) =>
-      request(`/lessons/${id}`, { method: 'PUT', body: JSON.stringify({ title }) }),
+    create: (courseId: string, title: string, videoUrl?: string) =>
+      request('/lessons', { method: 'POST', body: JSON.stringify({ courseId, title, videoUrl }) }),
+    update: (id: string, title: string, videoUrl?: string) =>
+      request(`/lessons/${id}`, { method: 'PUT', body: JSON.stringify({ title, videoUrl }) }),
     delete: (id: string) => request(`/lessons/${id}`, { method: 'DELETE' }),
   },
   progress: {

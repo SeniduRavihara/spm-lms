@@ -10,6 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 interface Lesson {
   id: string;
   title: string;
+  videoUrl?: string;
   courseId: string;
 }
 
@@ -26,6 +27,7 @@ export default function StudentCoursePage() {
   const router = useRouter();
   const [course, setCourse] = useState<Course | null>(null);
   const [completed, setCompleted] = useState<Set<string>>(new Set());
+  const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
   const [loadingData, setLoadingData] = useState(true);
 
   useEffect(() => {
@@ -39,6 +41,9 @@ export default function StudentCoursePage() {
       try {
         const c = await api.courses.get(id as string);
         setCourse(c);
+        if (c && c.lessons && c.lessons.length > 0) {
+          setActiveLesson(c.lessons[0]);
+        }
         const progressList = await api.progress.get(id as string);
         setCompleted(new Set(progressList.filter((p: any) => p.completed).map((p: any) => p.lessonId)));
       } catch (err) {
@@ -127,7 +132,7 @@ export default function StudentCoursePage() {
         </div>
         <div className="h-4 bg-muted rounded-full overflow-hidden border border-border">
           <motion.div
-            className="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-cyan-500 rounded-full"
+            className="h-full bg-linear-to-r from-blue-500 via-indigo-500 to-cyan-500 rounded-full"
             initial={{ width: 0 }}
             animate={{ width: `${progressPct}%` }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
@@ -135,66 +140,113 @@ export default function StudentCoursePage() {
         </div>
       </div>
 
-      {/* Syllabus Lessons Checklist */}
-      <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-        <span className="text-lg">📚</span> Course Lessons
-      </h2>
-
-      <div className="space-y-3">
-        <AnimatePresence initial={false}>
-          {course.lessons.map((lesson, idx) => {
-            const isCompleted = completed.has(lesson.id);
-            return (
-              <motion.div
-                key={lesson.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: idx * 0.05 }}
-                whileHover={{ scale: 1.01, y: -2 }}
-                onClick={() => handleToggle(lesson.id)}
-                className={`flex items-center justify-between p-4 border rounded-xl cursor-pointer select-none transition-all duration-200 ${
-                  isCompleted
-                    ? 'border-success/30 bg-success/5 hover:border-success/50'
-                    : 'border-border bg-card hover:border-primary/50 hover:shadow-md'
-                }`}
-              >
-                <div className="flex items-center gap-4 flex-1">
-                  {/* Custom Checkbox */}
-                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
-                    isCompleted
-                      ? 'border-success bg-success text-white'
-                      : 'border-border bg-background group-hover:border-primary'
-                  }`}>
-                    {isCompleted && (
-                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                      </svg>
-                    )}
+      {/* active lesson view and playlist */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Left: Active Lesson player */}
+        <div className="md:col-span-2 space-y-6">
+          {activeLesson ? (
+            <div className="rounded-2xl border border-border bg-card p-6 shadow-md">
+              <h2 className="text-2xl font-extrabold text-foreground mb-4">{activeLesson.title}</h2>
+              
+              {/* Video Player */}
+              <div className="relative pt-[56.25%] w-full rounded-xl overflow-hidden bg-black shadow-lg mb-6 border border-border">
+                {activeLesson.videoUrl && activeLesson.videoUrl.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/) ? (
+                  <iframe
+                    src={`https://www.youtube.com/embed/${activeLesson.videoUrl.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/)?.[2]}`}
+                    className="absolute top-0 left-0 w-full h-full border-0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    title={activeLesson.title}
+                  />
+                ) : (
+                  <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center text-foreground-muted bg-linear-to-br from-slate-900 to-slate-950 p-6 text-center">
+                    <span className="text-4xl mb-2">🎥</span>
+                    <p className="font-semibold text-white">No video attached to this lesson.</p>
+                    <p className="text-xs text-foreground-muted/60 max-w-70 mt-1">Enjoy reading through your syllabus notes and materials.</p>
                   </div>
-                  <span className={`font-semibold text-foreground transition ${isCompleted ? 'line-through text-foreground-muted/60' : ''}`}>
-                    {lesson.title}
-                  </span>
-                </div>
+                )}
+              </div>
 
-                <div className="flex items-center gap-2">
-                  <span className={`text-xs font-semibold px-2 py-0.5 rounded ${
-                    isCompleted
-                      ? 'bg-success/10 text-success'
-                      : 'bg-muted text-foreground-muted'
-                  }`}>
-                    {isCompleted ? 'Completed' : 'Pending'}
-                  </span>
-                </div>
-              </motion.div>
-            );
-          })}
-        </AnimatePresence>
+              {/* Mark Complete Button */}
+              <div className="flex justify-between items-center bg-muted/30 p-4 rounded-xl border border-border">
+                <span className="text-sm font-semibold text-foreground-muted">
+                  Status: {completed.has(activeLesson.id) ? 'Completed' : 'Pending'}
+                </span>
+                <button
+                  onClick={() => handleToggle(activeLesson.id)}
+                  className={`px-6 py-2 rounded-lg font-bold text-sm shadow-xs transition-all duration-200 ${
+                    completed.has(activeLesson.id)
+                      ? 'bg-emerald-500/15 text-emerald-600 border border-emerald-500/30 hover:bg-emerald-500/20'
+                      : 'bg-blue-600 hover:bg-blue-700 text-white shadow-md'
+                  }`}
+                >
+                  {completed.has(activeLesson.id) ? '✓ Completed' : 'Mark as Complete'}
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="rounded-2xl border border-dashed border-border p-12 text-center text-foreground-muted bg-card">
+              Select a lesson from the syllabus to start learning.
+            </div>
+          )}
+        </div>
 
-        {totalLessons === 0 && (
-          <div className="rounded-xl border border-dashed border-border p-8 text-center text-foreground-muted bg-card">
-            There are no lessons uploaded for this course yet.
+        {/* Right: Playlist */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
+            <span>📚</span> Syllabus Lessons
+          </h3>
+          
+          <div className="space-y-2">
+            {course.lessons.map((lesson, idx) => {
+              const isCompleted = completed.has(lesson.id);
+              const isActive = activeLesson?.id === lesson.id;
+              return (
+                <motion.div
+                  key={lesson.id}
+                  whileHover={{ scale: 1.01 }}
+                  onClick={() => setActiveLesson(lesson)}
+                  className={`flex items-center justify-between p-4 border rounded-xl cursor-pointer select-none transition-all duration-200 ${
+                    isActive
+                      ? 'border-blue-500 bg-blue-500/5'
+                      : isCompleted
+                      ? 'border-emerald-500/30 bg-emerald-500/5 hover:border-emerald-500/40'
+                      : 'border-border bg-card hover:border-primary/50'
+                  }`}
+                >
+                  <div className="flex items-center gap-3 flex-1 min-w-0">
+                    <div 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleToggle(lesson.id);
+                      }}
+                      className={`w-5 h-5 rounded-full border flex items-center justify-center shrink-0 transition-all ${
+                        isCompleted
+                          ? 'border-emerald-500 bg-emerald-500 text-white'
+                          : 'border-border bg-background hover:border-primary'
+                      }`}
+                    >
+                      {isCompleted && (
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3.5} d="M5 13l4 4L19 7" />
+                        </svg>
+                      )}
+                    </div>
+                    <span className={`font-semibold text-sm truncate text-foreground transition ${isCompleted ? 'line-through text-foreground-muted/60' : ''}`}>
+                      {lesson.title}
+                    </span>
+                  </div>
+                </motion.div>
+              );
+            })}
+
+            {totalLessons === 0 && (
+              <div className="rounded-xl border border-dashed border-border p-8 text-center text-foreground-muted bg-card">
+                There are no lessons uploaded for this course yet.
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </motion.div>
   );

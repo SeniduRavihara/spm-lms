@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 interface Lesson {
   id: string;
   title: string;
+  videoUrl?: string;
 }
 
 interface Course {
@@ -26,6 +27,7 @@ export default function CourseDetailPage() {
   const router = useRouter();
   const [course, setCourse] = useState<Course | null>(null);
   const [newLesson, setNewLesson] = useState('');
+  const [newVideoUrl, setNewVideoUrl] = useState('');
   const [loadingData, setLoadingData] = useState(true);
 
   useEffect(() => {
@@ -55,11 +57,12 @@ export default function CourseDetailPage() {
     if (!newLesson.trim()) return;
 
     try {
-      const lesson = await api.lessons.create(id as string, newLesson);
+      const lesson = await api.lessons.create(id as string, newLesson, newVideoUrl);
       setCourse((prev) =>
         prev ? { ...prev, lessons: [...prev.lessons, lesson] } : prev
       );
       setNewLesson('');
+      setNewVideoUrl('');
     } catch (err) {
       console.error('Failed to add lesson:', err);
     }
@@ -129,21 +132,32 @@ export default function CourseDetailPage() {
         <h2 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
           <span>📝</span> Add New Syllabus Lesson
         </h2>
-        <form onSubmit={handleAddLesson} className="flex flex-col sm:flex-row gap-3">
-          <input
-            type="text"
-            placeholder="e.g. Lesson 1: Introduction to Next.js routing"
-            required
-            value={newLesson}
-            onChange={(e) => setNewLesson(e.target.value)}
-            className="flex-1 px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition text-sm bg-background text-foreground"
-          />
-          <Button
-            type="submit"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-sm"
-          >
-            Add Lesson
-          </Button>
+        <form onSubmit={handleAddLesson} className="flex flex-col gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
+            <input
+              type="text"
+              placeholder="e.g. Lesson 1: Introduction to Next.js routing"
+              required
+              value={newLesson}
+              onChange={(e) => setNewLesson(e.target.value)}
+              className="flex-1 px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition text-sm bg-background text-foreground"
+            />
+            <input
+              type="text"
+              placeholder="YouTube Video URL (optional, e.g. https://www.youtube.com/watch?v=...)"
+              value={newVideoUrl}
+              onChange={(e) => setNewVideoUrl(e.target.value)}
+              className="flex-1 px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition text-sm bg-background text-foreground"
+            />
+          </div>
+          <div className="flex justify-end">
+            <Button
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-sm"
+            >
+              Add Lesson
+            </Button>
+          </div>
         </form>
       </div>
 
@@ -164,11 +178,18 @@ export default function CourseDetailPage() {
               whileHover={{ scale: 1.01, y: -1 }}
               className="flex items-center justify-between p-4 border border-border bg-card rounded-xl shadow-sm hover:border-primary/50 hover:shadow-md transition-all duration-200"
             >
-              <div className="flex items-center gap-3">
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary text-xs font-bold border border-primary/20">
-                  {idx + 1}
-                </span>
-                <span className="font-semibold text-foreground">{lesson.title}</span>
+              <div className="flex flex-col gap-1">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary text-xs font-bold border border-primary/20">
+                    {idx + 1}
+                  </span>
+                  <span className="font-semibold text-foreground">{lesson.title}</span>
+                </div>
+                {lesson.videoUrl && (
+                  <span className="text-xs text-foreground-muted ml-10 truncate max-w-75 sm:max-w-md">
+                    🎥 {lesson.videoUrl}
+                  </span>
+                )}
               </div>
               <Button
                 onClick={() => handleDeleteLesson(lesson.id)}
