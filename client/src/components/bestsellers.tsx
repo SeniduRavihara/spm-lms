@@ -15,6 +15,7 @@ const bestsellers = [
     reviews: 12,
     instructor: { name: 'Robert Rumsfeld', avatar: '' },
     duration: '2:30 Hours',
+    
   },
   {
     id: '6',
