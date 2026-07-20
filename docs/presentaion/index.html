@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPM LMS Presentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Sora:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- SLIDE DECK -->
+  <div class="deck" id="deck">
+
+    <!-- ─────────────────────────────────────────
+         SLIDE 1 · COVER (dark hero)
+    ───────────────────────────────────────── -->
+    <div class="slide active" id="s1">
+      <div class="hero-bg" style="background-image:url('images/bg_tech.png')"></div>
+      <div class="hero-overlay"></div>
+      <div class="slide-inner cover-inner">
+        <div class="cover-top">
+          <img src="images/japura_logo.webp" alt="Logo" class="uni-logo">
+          <span class="course-tag">Software Process Management · Assignment 01</span>
+        </div>
+        <div class="cover-body">
+          <div class="accent-line"></div>
+          <h1 class="cover-title">DevOps-Driven<br>Learning Management<br>System</h1>
+          <p class="cover-sub">Full-Stack LMS with Agile Scrum &amp; CI/CD Automation · July 2026</p>
+        </div>
+        <div class="team-strip">
+          <div class="tm"><span class="tm-role">Backend Dev</span><span class="tm-name">M.W.S. Ekanayaka</span><span class="tm-id">FC222011</span></div>
+          <div class="tm"><span class="tm-role">Frontend Dev</span><span class="tm-name">S.T. Rahman</span><span class="tm-id">FC222033</span></div>
+          <div class="tm"><span class="tm-role">DevOps Eng.</span><span class="tm-name">U.S. Ravihara</span><span class="tm-id">FC222028</span></div>
+          <div class="tm"><span class="tm-role">QA Engineer</span><span class="tm-name">O.P.S. Perera</span><span class="tm-id">FC222026</span></div>
+          <div class="tm"><span class="tm-role">Product Owner</span><span class="tm-name">L.R. Thuduwege</span><span class="tm-id">FC222002</span></div>
+          <div class="tm"><span class="tm-role">Scrum Master</span><span class="tm-name">S.M.S.Y. Wickramarathna</span><span class="tm-id">FC222037</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────
+         SLIDE 2 · PROJECT OVERVIEW (light)
+    ───────────────────────────────────────── -->
+    <div class="slide" id="s2">
+      <div class="slide-inner light-slide">
+        <div class="slide-tag">01 · Project Overview</div>
+        <h2 class="slide-title dark-title">Problem &amp; Solution</h2>
+        <div class="two-col gap-xl">
+          <div class="panel problem-panel">
+            <div class="panel-head red">Problem Statement</div>
+            <ul class="big-list">
+              <li>Existing LMS platforms have <strong>poor UX</strong> &amp; are difficult to navigate</li>
+              <li>Low-cost servers <strong>crash</strong> when running full-stack Next.js + Express apps</li>
+              <li>Raw database &amp; app ports <strong>exposed</strong> to the internet</li>
+              <li><strong>Manual deployments</strong> via SSH are slow &amp; error-prone</li>
+            </ul>
+          </div>
+          <div class="panel solution-panel">
+            <div class="panel-head blue">Our Solution — SPM LMS</div>
+            <ul class="big-list">
+              <li><strong>Responsive Next.js portal</strong> with Teacher Syllabus + Student Progress dashboards</li>
+              <li><strong>Neon Serverless Postgres</strong> with Prisma ORM for type-safe queries</li>
+              <li><strong>Nginx Reverse Proxy</strong> — single Port 80 entry, internal container routing</li>
+              <li><strong>Automated CI/CD</strong> via GitHub Actions with SSH auto-deploy to VPS</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────
+         SLIDE 3 · TECH STACK (dark accent)
+    ───────────────────────────────────────── -->
+    <div class="slide" id="s3">
+      <div class="slide-inner dark-accent-slide">
+        <div class="slide-tag light-tag">02 · Technology Stack</div>
+        <h2 class="slide-title white-title">What We Built With</h2>
+        <div class="four-col">
+          <div class="stack-card" style="--accent:#6366f1">
+            <div class="stack-icon" style="background:#6366f11a;border-color:#6366f140">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            </div>
+            <div>
+              <h3>Frontend</h3>
+              <div class="stack-subtitle">User Interface &amp; Client Logic</div>
+            </div>
+            <ul class="tech-list">
+              <li><span class="bullet"></span>Next.js 14 Framework</li>
+              <li><span class="bullet"></span>TypeScript Security</li>
+              <li><span class="bullet"></span>Tailwind CSS Layouts</li>
+              <li><span class="bullet"></span>Framer Motion Transitions</li>
+            </ul>
+          </div>
+          <div class="stack-card" style="--accent:#06b6d4">
+            <div class="stack-icon" style="background:#06b6d41a;border-color:#06b6d440">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M5.34 18.66l-1.41 1.41M21 12h-2M5 12H3m16.07 7.07l-1.41-1.41M5.34 5.34L3.93 3.93"/></svg>
+            </div>
+            <div>
+              <h3>Backend</h3>
+              <div class="stack-subtitle">REST API &amp; Server Core</div>
+            </div>
+            <ul class="tech-list">
+              <li><span class="bullet"></span>Express.js Runtime</li>
+              <li><span class="bullet"></span>TypeScript Execution</li>
+              <li><span class="bullet"></span>JWT Auth Architecture</li>
+              <li><span class="bullet"></span>Bcrypt Password Hashing</li>
+            </ul>
+          </div>
+          <div class="stack-card" style="--accent:#10b981">
+            <div class="stack-icon" style="background:#10b9811a;border-color:#10b98140">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            </div>
+            <div>
+              <h3>Database</h3>
+              <div class="stack-subtitle">Relational Storage &amp; Schema</div>
+            </div>
+            <ul class="tech-list">
+              <li><span class="bullet"></span>Neon Postgres Cloud</li>
+              <li><span class="bullet"></span>Prisma ORM Mapping</li>
+              <li><span class="bullet"></span>SSL Connection Pooling</li>
+              <li><span class="bullet"></span>Automated DB Migrations</li>
+            </ul>
+          </div>
+          <div class="stack-card" style="--accent:#f97316">
+            <div class="stack-icon" style="background:#f973161a;border-color:#f9731640">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            </div>
+            <div>
+              <h3>DevOps</h3>
+              <div class="stack-subtitle">Infrastructure &amp; Pipelines</div>
+            </div>
+            <ul class="tech-list">
+              <li><span class="bullet"></span>Multi-Stage Dockerfiles</li>
+              <li><span class="bullet"></span>GitHub Actions CI/CD</li>
+              <li><span class="bullet"></span>Nginx Reverse Proxy</li>
+              <li><span class="bullet"></span>Oracle Cloud VPS Host</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────
+         SLIDE 4 · AGILE / SCRUM (light)
+    ───────────────────────────────────────── -->
+    <div class="slide" id="s4">
+      <div class="slide-inner light-slide">
+        <div class="slide-tag">03 · Agile &amp; Scrum</div>
+        <h2 class="slide-title dark-title">Sprint Management &amp; Process</h2>
+        <div class="sprint-grid">
+          <div class="sprint-block">
+            <span class="snum" style="color:#6366f1">Sprint 1</span>
+            <h4>Foundation</h4>
+            <p>Prisma schema, Neon DB connection, JWT auth middleware, Core REST API routes, seed scripts</p>
+          </div>
+          <div class="sprint-block">
+            <span class="snum" style="color:#3b82f6">Sprint 2</span>
+            <h4>UI / UX</h4>
+            <p>Next.js dashboards, Auth context, course checklists, real-time progress bars, animations</p>
+          </div>
+          <div class="sprint-block">
+            <span class="snum" style="color:#06b6d4">Sprint 3</span>
+            <h4>DevOps Setup</h4>
+            <p>Multi-stage Dockerfiles, docker-compose networking, Jest &amp; Supertest integration tests</p>
+          </div>
+          <div class="sprint-block">
+            <span class="snum" style="color:#10b981">Sprint 4</span>
+            <h4>CI/CD &amp; Deploy</h4>
+            <p>GitHub Actions pipeline, Oracle VPS config, Nginx proxy, swap memory, live deployment</p>
+          </div>
+        </div>
+        <div class="ceremonies-row">
+          <div class="cer-chip">Sprint Planning</div>
+          <div class="cer-chip">Daily Standups</div>
+          <div class="cer-chip">Sprint Review</div>
+          <div class="cer-chip">Retrospective</div>
+          <div class="cer-chip">Backlog Refinement</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────
+         SLIDE 5 · TEAM CONTRIBUTIONS (light)
+    ───────────────────────────────────────── -->
+    <div class="slide" id="s5">
+      <div class="slide-inner light-slide">
+        <div class="slide-tag">04 · Individual Contributions</div>
+        <h2 class="slide-title dark-title">Team Roles &amp; Work</h2>
+        <div class="contrib-grid">
+          <div class="contrib-card" style="--c:#6366f1">
+            <div class="cc-role">Backend Developer</div>
+            <div class="cc-name">M.W.S. Ekanayaka <span>FC222011</span></div>
+            <ul><li>Express REST API &amp; controllers</li><li>JWT auth &amp; bcrypt hashing</li><li>Prisma schema design</li></ul>
+          </div>
+          <div class="contrib-card" style="--c:#3b82f6">
+            <div class="cc-role">Frontend Developer</div>
+            <div class="cc-name">S.T. Rahman <span>FC222033</span></div>
+            <ul><li>Next.js portal &amp; dashboards</li><li>Auth context &amp; JWT storage</li><li>Progress bars &amp; checklists</li></ul>
+          </div>
+          <div class="contrib-card" style="--c:#06b6d4">
+            <div class="cc-role">DevOps Engineer</div>
+            <div class="cc-name">U.S. Ravihara <span>FC222028</span></div>
+            <ul><li>Docker multi-stage builds</li><li>Nginx reverse proxy &amp; VPS</li><li>4GB swap memory setup</li></ul>
+          </div>
+          <div class="contrib-card" style="--c:#10b981">
+            <div class="cc-role">QA Engineer</div>
+            <div class="cc-name">O.P.S. Perera <span>FC222026</span></div>
+            <ul><li>Jest &amp; Supertest framework</li><li>Auth, courses, progress tests</li><li>CI test pipeline integration</li></ul>
+          </div>
+          <div class="contrib-card" style="--c:#f97316">
+            <div class="cc-role">Product Owner</div>
+            <div class="cc-name">L.R. Thuduwege <span>FC222002</span></div>
+            <ul><li>Backlog &amp; user story mapping</li><li>Sprint goal definitions</li><li>UAT &amp; acceptance criteria</li></ul>
+          </div>
+          <div class="contrib-card" style="--c:#ec4899">
+            <div class="cc-role">Scrum Master</div>
+            <div class="cc-name">S.M.S.Y. Wickramarathna <span>FC222037</span></div>
+            <ul><li>Daily standups &amp; ceremonies</li><li>Blocker removal (CORS/Docker)</li><li>Team velocity tracking</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────
+         SLIDE 6 · OPERATIONAL TOOLS (dark)
+    ───────────────────────────────────────── -->
+    <div class="slide" id="s6">
+      <div class="hero-bg" style="background-image:url('images/bg_tech.png')"></div>
+      <div class="hero-overlay" style="background:rgba(5,8,20,0.82)"></div>
+      <div class="slide-inner">
+        <div class="slide-tag light-tag">05 · Operational Tools</div>
+        <h2 class="slide-title white-title">Tools Used Across the Lifecycle</h2>
+        <div class="tools-grid">
+          <div class="tool-row">
+            <div class="tool-label">Project Management</div>
+            <div class="tool-pills">
+              <span class="pill" style="background:#6366f120;border-color:#6366f1;color:#818cf8">GitHub Projects</span>
+              <span class="pill" style="background:#6366f120;border-color:#6366f1;color:#818cf8">GitHub Issues</span>
+              <span class="pill" style="background:#6366f120;border-color:#6366f1;color:#818cf8">Kanban Board</span>
+            </div>
+          </div>
+          <div class="tool-row">
+            <div class="tool-label">Version Control</div>
+            <div class="tool-pills">
+              <span class="pill" style="background:#06b6d420;border-color:#06b6d4;color:#67e8f9">Git</span>
+              <span class="pill" style="background:#06b6d420;border-color:#06b6d4;color:#67e8f9">GitHub</span>
+              <span class="pill" style="background:#06b6d420;border-color:#06b6d4;color:#67e8f9">Branch Protection</span>
+              <span class="pill" style="background:#06b6d420;border-color:#06b6d4;color:#67e8f9">Pull Requests</span>
+            </div>
+          </div>
+          <div class="tool-row">
+            <div class="tool-label">Development</div>
+            <div class="tool-pills">
+              <span class="pill" style="background:#10b98120;border-color:#10b981;color:#6ee7b7">Next.js</span>
+              <span class="pill" style="background:#10b98120;border-color:#10b981;color:#6ee7b7">Express.js</span>
+              <span class="pill" style="background:#10b98120;border-color:#10b981;color:#6ee7b7">TypeScript</span>
+              <span class="pill" style="background:#10b98120;border-color:#10b981;color:#6ee7b7">Prisma ORM</span>
+              <span class="pill" style="background:#10b98120;border-color:#10b981;color:#6ee7b7">VS Code</span>
+            </div>
+          </div>
+          <div class="tool-row">
+            <div class="tool-label">Communication &amp; Docs</div>
+            <div class="tool-pills">
+              <span class="pill" style="background:#f9731620;border-color:#f97316;color:#fdba74">Discord</span>
+              <span class="pill" style="background:#f9731620;border-color:#f97316;color:#fdba74">WhatsApp</span>
+              <span class="pill" style="background:#f9731620;border-color:#f97316;color:#fdba74">Overleaf / LaTeX</span>
+              <span class="pill" style="background:#f9731620;border-color:#f97316;color:#fdba74">Markdown</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────
+         SLIDE 7 · GIT WORKFLOW (light)
+    ───────────────────────────────────────── -->
+    <div class="slide" id="s7">
+      <div class="slide-inner light-slide">
+        <div class="slide-tag">06 · DevOps — Git Workflow</div>
+        <h2 class="slide-title dark-title">Branching Strategy</h2>
+        <div class="two-col gap-lg">
+          <div>
+            <ul class="big-list">
+              <li><strong style="color:#10b981">main</strong> — stable, production-ready. Protected from direct commits.</li>
+              <li><strong style="color:#3b82f6">develop</strong> — integration branch for reviewed features.</li>
+              <li><strong style="color:#f97316">feature/*</strong> — isolated dev branches (e.g. <code>feature/auth-jwt</code>)</li>
+              <li>All merges require a <strong>Pull Request</strong> and code review.</li>
+              <li>Every push to <strong>main</strong> triggers the CI/CD pipeline automatically.</li>
+            </ul>
+          </div>
+          <div class="git-diagram">
+            <svg viewBox="0 0 900 300" style="width:100%; height:100%; overflow:visible;">
+
+              <!-- BACKGROUND DASHED LANE GUIDES -->
+              <line x1="220" y1="35" x2="900" y2="35" stroke="rgba(16,185,129,0.15)" stroke-width="3" stroke-dasharray="6,5"/>
+              <line x1="220" y1="115" x2="900" y2="115" stroke="rgba(59,130,246,0.15)" stroke-width="3" stroke-dasharray="6,5"/>
+              <line x1="220" y1="195" x2="900" y2="195" stroke="rgba(99,102,241,0.15)" stroke-width="3" stroke-dasharray="6,5"/>
+              <line x1="220" y1="265" x2="900" y2="265" stroke="rgba(249,115,22,0.15)" stroke-width="3" stroke-dasharray="6,5"/>
+
+              <!-- ── MAIN: initial commit ── -->
+              <line x1="220" y1="35" x2="300" y2="35" stroke="#10b981" stroke-width="4"/>
+              <!-- main branches OUT to develop (DOWN curve) -->
+              <path d="M 300 35 C 340 35, 340 115, 380 115" stroke="#10b981" stroke-width="4" fill="none"/>
+
+              <!-- ── DEVELOP: horizontal segment ── -->
+              <line x1="380" y1="115" x2="420" y2="115" stroke="#3b82f6" stroke-width="4"/>
+
+              <!-- develop branches to feature/auth (DOWN curve) -->
+              <path d="M 420 115 C 455 115, 455 195, 490 195" stroke="#3b82f6" stroke-width="4" fill="none"/>
+              <!-- develop branches to feature/dashboard (DOWN curve, further) -->
+              <path d="M 420 115 C 460 115, 460 265, 510 265" stroke="#3b82f6" stroke-width="4" fill="none"/>
+
+              <!-- ── FEATURE/AUTH: horizontal segment ── -->
+              <line x1="490" y1="195" x2="600" y2="195" stroke="#6366f1" stroke-width="4"/>
+              <!-- feature/auth merges BACK into develop (UP curve) -->
+              <path d="M 600 195 C 635 195, 635 115, 670 115" stroke="#6366f1" stroke-width="4" fill="none"/>
+
+              <!-- ── FEATURE/DASHBOARD: horizontal segment ── -->
+              <line x1="510" y1="265" x2="640" y2="265" stroke="#f97316" stroke-width="4"/>
+              <!-- feature/dashboard merges BACK into develop (UP curve) -->
+              <path d="M 640 265 C 680 265, 680 115, 710 115" stroke="#f97316" stroke-width="4" fill="none"/>
+
+              <!-- ── DEVELOP: continues after merges ── -->
+              <line x1="670" y1="115" x2="750" y2="115" stroke="#3b82f6" stroke-width="4"/>
+
+              <!-- develop merges BACK into main (UP curve) -->
+              <path d="M 750 115 C 790 115, 790 35, 830 35" stroke="#3b82f6" stroke-width="4" fill="none"/>
+
+              <!-- ── MAIN: continues after develop merge ── -->
+              <line x1="830" y1="35" x2="900" y2="35" stroke="#10b981" stroke-width="4"/>
+
+              <!-- ══ COMMIT DOTS ══ -->
+              <!-- main -->
+              <circle cx="220" cy="35" r="11" fill="#10b981" style="filter:drop-shadow(0 0 10px #10b981)"/>
+              <circle cx="300" cy="35" r="9" fill="#10b981" style="filter:drop-shadow(0 0 8px #10b981)"/>
+              <circle cx="830" cy="35" r="11" fill="#10b981" style="filter:drop-shadow(0 0 10px #10b981)"/>
+
+              <!-- develop -->
+              <circle cx="380" cy="115" r="9" fill="#3b82f6" style="filter:drop-shadow(0 0 8px #3b82f6)"/>
+              <circle cx="420" cy="115" r="9" fill="#3b82f6" style="filter:drop-shadow(0 0 8px #3b82f6)"/>
+              <circle cx="670" cy="115" r="9" fill="#3b82f6" style="filter:drop-shadow(0 0 8px #3b82f6)"/>
+              <circle cx="710" cy="115" r="9" fill="#3b82f6" style="filter:drop-shadow(0 0 8px #3b82f6)"/>
+              <circle cx="750" cy="115" r="9" fill="#3b82f6" style="filter:drop-shadow(0 0 8px #3b82f6)"/>
+
+              <!-- feature/auth -->
+              <circle cx="490" cy="195" r="9" fill="#6366f1" style="filter:drop-shadow(0 0 8px #6366f1)"/>
+              <circle cx="600" cy="195" r="9" fill="#6366f1" style="filter:drop-shadow(0 0 8px #6366f1)"/>
+
+              <!-- feature/dashboard -->
+              <circle cx="510" cy="265" r="9" fill="#f97316" style="filter:drop-shadow(0 0 8px #f97316)"/>
+              <circle cx="640" cy="265" r="9" fill="#f97316" style="filter:drop-shadow(0 0 8px #f97316)"/>
+
+              <!-- ══ BRANCH LABELS ══ -->
+              <text x="10" y="42" fill="#10b981" font-family="'Sora',sans-serif" font-size="21" font-weight="800">main</text>
+              <text x="10" y="122" fill="#3b82f6" font-family="'Sora',sans-serif" font-size="21" font-weight="800">develop</text>
+              <text x="10" y="202" fill="#6366f1" font-family="'Sora',sans-serif" font-size="21" font-weight="800">feature/auth</text>
+              <text x="10" y="272" fill="#f97316" font-family="'Sora',sans-serif" font-size="21" font-weight="800">feature/dash</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────
+         SLIDE 8 · DOCKER (image left)
+    ───────────────────────────────────────── -->
+    <div class="slide" id="s8">
+      <div class="slide-inner light-slide">
+        <div class="slide-tag">07 · DevOps — Docker</div>
+        <h2 class="slide-title dark-title">Multi-Stage Containerization</h2>
+        <div class="img-split">
+          <div class="img-side">
+            <img src="images/code1.png" alt="Dockerfile" class="full-img shadow-img">
+          </div>
+          <div class="text-side">
+            <div class="highlight-box" style="border-left:5px solid #3b82f6">
+              <strong>Multi-Stage Build Strategy</strong>
+              <p>Three stages: <code>deps</code> → <code>builder</code> → <code>runner</code></p>
+            </div>
+            <div class="highlight-box" style="border-left:5px solid #10b981;margin-top:28px">
+              <strong>Image Size Reduction</strong>
+              <p>From <span class="stat-num" style="color:#ef4444">1.5 GB</span> down to <span class="stat-num" style="color:#10b981">&lt; 250 MB</span></p>
+            </div>
+            <div class="highlight-box" style="border-left:5px solid #6366f1;margin-top:28px">
+              <strong>Docker Compose</strong>
+              <p>Single file manages both client + server containers with shared networking</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────
+         SLIDE 9 · CI/CD (dark hero)
+    ───────────────────────────────────────── -->
+    <div class="slide" id="s9">
+      <div class="hero-bg" style="background-image:url('images/bg_tech.png')"></div>
+      <div class="hero-overlay" style="background:rgba(5,8,20,0.92)"></div>
+      <div class="slide-inner">
+        <div class="slide-tag light-tag">08 · DevOps — CI/CD</div>
+        <h2 class="slide-title white-title" style="margin-bottom:30px">GitHub Actions Pipeline</h2>
+        <div class="img-split" style="align-items:stretch">
+          <div class="text-side" style="justify-content:center;gap:0">
+            <div class="pipeline-steps">
+              <div class="pipe-step">
+                <div class="pipe-num" style="background:#6366f1">1</div>
+                <div><strong>Code Push / PR to main</strong><br><span>Triggers workflow automatically</span></div>
+              </div>
+              <div class="pipe-arrow">↓</div>
+              <div class="pipe-step">
+                <div class="pipe-num" style="background:#3b82f6">2</div>
+                <div><strong>Install &amp; Generate Prisma Client</strong><br><span><code>npm ci</code> + <code>npx prisma generate</code></span></div>
+              </div>
+              <div class="pipe-arrow">↓</div>
+              <div class="pipe-step">
+                <div class="pipe-num" style="background:#06b6d4">3</div>
+                <div><strong>Run Jest Integration Tests</strong><br><span>auth, courses, lessons, progress</span></div>
+              </div>
+              <div class="pipe-arrow">↓</div>
+              <div class="pipe-step">
+                <div class="pipe-num" style="background:#10b981">4</div>
+                <div><strong>SSH Deploy to Oracle VPS</strong><br><span><code>git pull</code> + <code>docker compose up --build</code></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="img-side">
+            <img src="images/pipeline_success_cropped.png" alt="GitHub Actions Workflow Success" class="full-img shadow-img" style="border:1px solid rgba(255,255,255,0.15)">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────
+         SLIDE 10 · VPS & NGINX (light image)
+    ───────────────────────────────────────── -->
+    <div class="slide" id="s10">
+      <div class="slide-inner light-slide">
+        <div class="slide-tag">09 · DevOps — VPS &amp; Nginx</div>
+        <h2 class="slide-title dark-title">Reverse Proxy &amp; Server Config</h2>
+        <div class="img-split">
+          <div class="text-side">
+            <div class="arch-diagram">
+              <div class="arch-box top-box">User Browser (Port 80)</div>
+              <div class="arch-arrow">↓</div>
+              <div class="arch-box mid-box" style="background:#1e40af;color:#fff">Nginx Reverse Proxy</div>
+              <div class="arch-split-row">
+                <div class="arch-arrow-branch">↙ /</div>
+                <div class="arch-arrow-branch">↘ /api</div>
+              </div>
+              <div class="arch-split-boxes">
+                <div class="arch-box small-box" style="background:#6366f120;border-color:#6366f1;color:#1e1b4b">Next.js:3000</div>
+                <div class="arch-box small-box" style="background:#06b6d420;border-color:#06b6d4;color:#083344">Express:4000</div>
+              </div>
+              <div class="arch-arrow">↓</div>
+              <div class="arch-box bot-box" style="background:#10b98120;border-color:#10b981;color:#052e16">Neon Postgres (SSL)</div>
+            </div>
+          </div>
+          <div class="img-side">
+            <img src="images/nginx_config.png" alt="Nginx config" class="full-img shadow-img">
+            <img src="images/vps_htop.png" alt="VPS htop" class="full-img shadow-img" style="margin-top:16px">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────
+         SLIDE 11 · TESTING (split image)
+    ───────────────────────────────────────── -->
+    <div class="slide" id="s11">
+      <div class="slide-inner light-slide">
+        <div class="slide-tag">10 · Testing Strategy</div>
+        <h2 class="slide-title dark-title">Jest &amp; Supertest Integration Tests</h2>
+        <div class="img-split">
+          <div class="text-side">
+            <ul class="big-list">
+              <li><strong>auth.test.ts</strong> — JWT sign-in flow, password hashing, token shape validation</li>
+              <li><strong>courses.test.ts</strong> — Full CRUD, teacher-only permission checks</li>
+              <li><strong>lessons.test.ts</strong> — Lesson CRUD within course syllabus</li>
+              <li><strong>progress.test.ts</strong> — Completion checkboxes &amp; percentage math</li>
+            </ul>
+            <div class="highlight-box" style="border-left:5px solid #10b981;margin-top:32px">
+              <strong>All tests run automatically</strong> on every Pull Request via the GitHub Actions CI pipeline
+            </div>
+          </div>
+          <div class="img-side">
+            <img src="images/test_results.png" alt="Test results" class="full-img shadow-img">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────
+         SLIDE 12 · CHALLENGES (dark)
+    ───────────────────────────────────────── -->
+    <div class="slide" id="s12">
+      <div class="hero-bg" style="background-image:url('images/bg_tech.png')"></div>
+      <div class="hero-overlay" style="background:rgba(5,8,20,0.8)"></div>
+      <div class="slide-inner">
+        <div class="slide-tag light-tag">11 · Challenges &amp; Solutions</div>
+        <h2 class="slide-title white-title">What We Overcame</h2>
+        <div class="challenge-grid">
+          <div class="chal-card">
+            <div class="chal-header">
+              <div class="chal-num" style="color:#ef4444">01</div>
+              <h3>VPS Memory Crash</h3>
+            </div>
+            <p>Next.js <code>next build</code> killed by OOM killer on 1GB RAM</p>
+            <div class="chal-solution">Configured 4GB SSD-backed swap space to prevent build crashes</div>
+          </div>
+          <div class="chal-card">
+            <div class="chal-header">
+              <div class="chal-num" style="color:#f97316">02</div>
+              <h3>Missing Prisma Client</h3>
+            </div>
+            <p>CI pipeline TypeScript build failed — generated files not in source tree</p>
+            <div class="chal-solution">Added <code>npx prisma generate</code> step before every build &amp; test job</div>
+          </div>
+          <div class="chal-card">
+            <div class="chal-header">
+              <div class="chal-num" style="color:#6366f1">03</div>
+              <h3>Docker CORS Errors</h3>
+            </div>
+            <p>Container-to-container requests blocked by cross-origin policy</p>
+            <div class="chal-solution">Standardized Express CORS config &amp; correct <code>NEXT_PUBLIC_API_URL</code> build args</div>
+          </div>
+          <div class="chal-card">
+            <div class="chal-header">
+              <div class="chal-num" style="color:#06b6d4">04</div>
+              <h3>Large Docker Images</h3>
+            </div>
+            <p>Initial image builds exceeded 1.5 GB — too large for low-RAM VPS</p>
+            <div class="chal-solution">Multi-stage builds with Alpine runner reduced images to &lt; 250 MB</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────
+         SLIDE 13 · LIVE DEMO & FUTURE (image hero)
+    ───────────────────────────────────────── -->
+    <div class="slide" id="s13">
+      <div class="hero-bg" style="background-image:url('images/live_website.png');background-size:cover;background-position:center"></div>
+      <div class="hero-overlay" style="background:linear-gradient(90deg,rgba(5,8,20,0.96) 45%,rgba(5,8,20,0.15) 100%)"></div>
+      <div class="slide-inner">
+        <div class="slide-tag light-tag">12 · Live Demo &amp; Roadmap</div>
+        <h2 class="slide-title white-title">Project Demonstration</h2>
+        <div style="max-width:52%">
+          <div class="live-url-box">
+            <span class="green-dot"></span>
+            <strong>Live at:</strong>&nbsp;
+            <code>http://134.185.84.132/</code>
+          </div>
+          <h3 class="future-head">Future Improvements</h3>
+          <ul class="future-list">
+            <li>AI-personalized learning pathways based on student behavior</li>
+            <li>24/7 virtual assistant chatbot for student support</li>
+            <li>Advanced analytics dashboard for teachers &amp; admins</li>
+            <li>Video conferencing via Zoom &amp; Google Meet API</li>
+          </ul>
+          <div class="highlight-box" style="border-left:5px solid #10b981;margin-top:36px;background:rgba(16,185,129,0.08);border-radius:8px">
+            <strong style="color:#6ee7b7">Thank you!</strong> Questions welcome.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /deck -->
+
+  <!-- Navigation Controls -->
+  <div class="controls" id="controls">
+    <button class="ctrl-btn" id="prevBtn" title="Previous (Left Arrow)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15,18 9,12 15,6"/></svg>
+    </button>
+    <div class="indicators" id="indicators"></div>
+    <button class="ctrl-btn" id="nextBtn" title="Next (Right Arrow / Space)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9,18 15,12 9,6"/></svg>
+    </button>
+    <span class="slide-counter" id="counter">1 / 13</span>
+    <button class="ctrl-btn" id="fsBtn" title="Fullscreen (F)">
+      <svg id="fs-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+    </button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
